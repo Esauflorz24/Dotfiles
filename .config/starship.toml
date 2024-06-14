@@ -7,10 +7,10 @@ format="$directory$git_branch$character"
 [character]
 success_symbol = "[➜](amber)"
 error_symbol = "[➜](red)"
-vicmd_symbol = "[➜](yellow)"
+vicmd_symbol = "[ ➜](lavender)"
 
 [git_branch]
-format = "[](peach)[[ ](bg:peach fg:base bold)$branch](bg:peach fg:base)[ ](peach)"
+format = "[](peach)[[ ](bg:peach fg:base bold)$branch](bg:peach fg:base)[ ](peach)"
 
 [line_break]
 disabled = true
@@ -18,7 +18,7 @@ disabled = true
 [directory]
 truncation_length = 6
 truncate_to_repo = true
-format = "[](teal)[$path](bg:teal fg:base)[ ](teal)"
+format = "[](teal)[󰉋 $path](bg:teal fg:base italic)[ ](teal)"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
