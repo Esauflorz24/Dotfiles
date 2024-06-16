@@ -37,7 +37,7 @@ return {
 			end
 			local signs = {
 				Error = " ",
-				Warn = " ",
+				Warn = " ",
 				Hint = " ",
 				Info = " ",
 			}
