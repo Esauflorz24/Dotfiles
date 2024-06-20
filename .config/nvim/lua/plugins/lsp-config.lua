@@ -34,7 +34,7 @@ return {
                 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 
                 client.server_capabilities.signatureHelpProvider = false
-                client.server_capabilities.semanticTokensProvider = true
+                client.server_capabilities.semanticTokensProvider = false
             end
             local signs = {
                 Error = " ",
