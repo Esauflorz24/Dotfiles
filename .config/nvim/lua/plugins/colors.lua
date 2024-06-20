@@ -1,10 +1,9 @@
 return {
-	"bluz71/vim-moonfly-colors",
+	"kdheepak/monochrome.nvim",
 	lazy = false,
 	priority = 1000,
-	name = "moonfly",
 
 	config = function()
-		vim.cmd.colorscheme("moonfly")
+		vim.cmd.colorscheme("monochrome")
 	end,
 }
