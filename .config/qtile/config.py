@@ -170,7 +170,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="CaskaydiaCove Nerd Font",
+    font="Hack Nerd Font",
     fontsize=14,
     padding=5,
     foreground = colors["fg"],
@@ -333,7 +333,7 @@ def init_widgets():
 
 
 def status_bar(widgets):
-    return bar.Bar(widgets, 27, margin = [5, 5, 3, 5])
+    return bar.Bar(widgets, 30, margin = [5, 5, 3, 5])
 
 
 screens = [Screen(top=status_bar(init_widgets()))]
