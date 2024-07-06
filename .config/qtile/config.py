@@ -275,7 +275,7 @@ def init_widgets():
                     foreground = colors["red"],
                     ),
                 widget.Memory(
-                    format=" {MemUsed: .2f}{mm} "
+                    format=" {MemUsed: .0f}{mm} "
                     ),
                 #widget.TextBox(
                 #    text='',
