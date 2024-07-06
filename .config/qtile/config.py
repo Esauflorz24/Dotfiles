@@ -237,7 +237,7 @@ def init_widgets():
                 widget.CheckUpdates(
                     distro = "Arch_checkupdates",
                     update_interval = 1800,
-                    display_format = "  {updates} ",
+                    display_format = "  {updates} ",
                     foreground = colors["blue"],
                     background = colors["bg"],
                     colour_have_updates = colors["blue"],
@@ -274,15 +274,8 @@ def init_widgets():
                     text="",
                     foreground = colors["red"],
                     ),
-                widget.CPUGraph(
-                   
-                    type='line', line_width=1,
-                    border_color = colors["bg"],
-                    frequency = 0.5, 
-                    graph_color = colors["amber"],
-                    margin_x = 6,
-                    margin_y = 6
-                    
+                widget.Memory(
+                    format=" {MemUsed: .2f}{mm} "
                     ),
                 #widget.TextBox(
                 #    text='',
@@ -309,15 +302,15 @@ def init_widgets():
                     text="",
                     foreground = colors["red"],
                     ),
-                widget.Backlight(
-                    backlight_name = 'intel_backlight',
-                    format = '  {percent:2.0%}',
-                    ),
-                widget.TextBox(
-                    #text='',
-                    text="",
-                    foreground = colors["red"],
-                    ),
+                # widget.Backlight(
+                #     backlight_name = 'intel_backlight',
+                #     format = '  {percent:2.0%}',
+                #     ),
+                # widget.TextBox(
+                #     #text='',
+                #     text="",
+                #     foreground = colors["red"],
+                #     ),
                 #widget.Sep(),
                 widget.Clock(format="  %d-%m-%Y -  %I:%M"),
                 widget.TextBox(
