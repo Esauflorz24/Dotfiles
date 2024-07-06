@@ -1,5 +1,1 @@
-/*
-!.gitignore
-!autostart.sh
-!config.py
-!themes
+__pycache__
