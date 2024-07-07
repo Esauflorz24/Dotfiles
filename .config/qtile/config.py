@@ -262,7 +262,7 @@ def init_widgets():
                     foreground = colors["red"],
                     ),
                 widget.Net(
-                    format=' {down:6.0f}{down_suffix:<2} ↓↑ {up:6.0f}{up_suffix:<2}',
+                    format='  {down:6.2f}{down_suffix:<2} ↓↑ {up:6.2f}{up_suffix:<2}',
                     interface="wlan0",
                     ),
                 #widget.TextBox(
