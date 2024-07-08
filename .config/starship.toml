@@ -7,7 +7,10 @@ format="$directory$git_branch$character"
 [character]
 success_symbol = "[➜](amber)"
 error_symbol = "[➜](red)"
-vicmd_symbol = "[ ➜](lavender)"
+vicmd_symbol = "[ ➜](bold lavender)"
+vimcmd_replace_one_symbol = '[ ➜](bold mauve) '
+vimcmd_replace_symbol = '[ ➜](bold teal) '
+vimcmd_visual_symbol = '[ ➜](bold green) '
 
 [git_branch]
 format = "[](peach)[[ ](bg:peach fg:base bold)$branch](bg:peach fg:base)[ ](peach)"
