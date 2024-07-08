@@ -184,9 +184,9 @@ def init_widgets():
     return [
                 widget.CurrentLayout(
 		            font = "Hack Nerd Font",
-		            fontsize = 15,
+		            fontsize = 14,
 		            foreground = colors['cyan'],
-                    padding = 5,
+                    padding = 6.5,
                     fmt = '  {}'
                     ),
                 widget.TextBox(
