@@ -182,11 +182,24 @@ extension_defaults = widget_defaults.copy()
 
 def init_widgets():
     return [
+                widget.CurrentLayout(
+		            font = "Hack Nerd Font",
+		            fontsize = 15,
+		            foreground = colors['cyan'],
+                    padding = 5,
+                    fmt = '  {}'
+                    ),
+                widget.TextBox(
+                    text='',
+                    #text="",
+                    foreground = colors["red"],
+                    ),
+
        #widget.CurrentLayout(),
-        widget.GroupBox(
-        highlight_method="text", 
-        active = colors["amber"], # not current active font color
-        inactive = colors["fg"],
+                widget.GroupBox(
+                    highlight_method="text", 
+                    active = colors["amber"], # not current active font color
+                    inactive = colors["fg"],
                     rounded = False,
                     disable_drag= True,
                     highlight_color = colors["red"],
@@ -201,27 +214,18 @@ def init_widgets():
                     #hide_unused=True,
                     ),
                 widget.Prompt(),
-                widget.TextBox(
-                    text='',
-                    #text="",
-                    foreground = colors["red"],
-                    ),
-                # widget.WindowName(
+                               # widget.WindowName(
                 #     format = "{name}",
                 #     max_chars = 25,
                 #     empty_group_string = 'Desktop',
-                # ),
-                widget.CurrentLayoutIcon(
-                    foreground = colors['amber'],
-                    padding = 5,
-                    scale = 0.6,
-                    ),
-                widget.CurrentLayout(
-		            font = "CaskaydiaCove Nerd Font",
-		            fontsize = 14,
-		            foreground = colors['amber'],
-                    padding = 5
-                    ),
+                # # ),
+                # widget.CurrentLayoutIcon(
+                #     foreground = colors['amber'],
+                #     padding = 5,
+                #     scale = 0.6,
+                #     format = ' {}'
+                #     ),
+                
                 widget.Spacer(
                     length = bar.STRETCH
                     #background = "#0080FF00"
@@ -262,7 +266,7 @@ def init_widgets():
                     foreground = colors["red"],
                     ),
                 widget.Net(
-                    format='  {down:6.2f}{down_suffix:<2} ↓↑ {up:6.2f}{up_suffix:<2}',
+                    format='  {down:6.2f}{down_suffix:<2} ↓↑ {up:6.2f}{up_suffix:<2}',
                     interface="wlan0",
                     ),
                 #widget.TextBox(
@@ -275,7 +279,8 @@ def init_widgets():
                     foreground = colors["red"],
                     ),
                 widget.Memory(
-                    format=" {MemUsed: .0f}{mm} "
+                    format=" {MemUsed: .0f}{mm} ",
+                    update_interval = 0.5
                     ),
                 #widget.TextBox(
                 #    text='',
