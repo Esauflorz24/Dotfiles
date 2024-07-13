@@ -1,9 +1,16 @@
 return {
-	"slugbyte/lackluster.nvim",
-	lazy = false,
-	priority = 1000,
+    "slugbyte/lackluster.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+        local lackluster = require("lackluster")
+        local color = lackluster.color
 
-	config = function()
-		vim.cmd.colorscheme("lackluster-hack")
-	end,
+        lackluster.setup({
+            tweak_background = {
+                normal = color.black,
+            },
+        })
+        vim.cmd.colorscheme("lackluster-hack")
+    end,
 }
