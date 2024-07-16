@@ -10,6 +10,7 @@ alias lm='lsd -m'
 alias lr='lsd -R'
 alias lg='lsd -l --group-directories-first'
 alias cat="bat"
+alias vi='nvim'
 
 
 # git
