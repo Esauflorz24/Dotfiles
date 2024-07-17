@@ -5,7 +5,7 @@ palette = "catppuccin_mocha"
 format="$directory $git_branch $character"
 
 [character]
-success_symbol = "[󰁔](sky)"
+success_symbol = "[󰁔](subtext1)"
 error_symbol = "[󰁔](red)"
 vicmd_symbol = "[ 󰁔](bold lavender)"
 vimcmd_replace_one_symbol = '[ 󰁔](bold mauve) '
@@ -13,7 +13,7 @@ vimcmd_replace_symbol = '[ 󰁔](bold teal) '
 vimcmd_visual_symbol = '[ 󰁔](bold green) '
 
 [git_branch]
-format = "[[ ](fg:peach bold)$branch](fg:peach)"
+format = "[[ ](fg:overlay2 bold)$branch](fg:overlay2)"
 
 [line_break]
 disabled = true
@@ -21,7 +21,7 @@ disabled = true
 [directory]
 truncation_length = 6
 truncate_to_repo = true
-format = "[ $path](fg:sapphire italic)"
+format = "[  $path](fg:text italic)"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
