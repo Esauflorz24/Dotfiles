@@ -148,7 +148,7 @@ colors = colors["hack"]
 
 layout_theme = {"border_width": 2,
                 "margin": 4,
-                "border_focus": colors["lack"],
+                "border_focus": colors["white"],
                 "border_normal": colors["black"]
                 }
 
@@ -174,7 +174,7 @@ widget_defaults = dict(
     font="Hack Nerd Font",
     fontsize=14,
     padding=5,
-    foreground = colors["lack"],
+    foreground = colors["white"],
     background = colors["black"],
 
 )
@@ -186,25 +186,25 @@ def init_widgets():
                 widget.CurrentLayout(
 		            font = "Hack Nerd Font",
 		            fontsize = 14,
-		            foreground = colors['warn'],
+		            foreground = colors['green'],
                     padding = 6.5,
                     fmt = '  {}'
                     ),
                 widget.TextBox(
                     text='',
                     #text="",
-                    foreground = colors["special"],
+                    foreground = colors["hint"],
                     ),
 
        #widget.CurrentLayout(),
                 widget.GroupBox(
                     highlight_method="text", 
-                    active = colors["amber"], # not current active font color
-                    inactive = colors["hint"],
+                    active = colors["green"], # not current active font color
+                    inactive = colors["gray6"],
                     rounded = False,
                     disable_drag= True,
                     highlight_color = colors["red"],
-                    this_current_screen_border = colors["gray9"], # current active font color - MAIN
+                    this_current_screen_border = colors["white"], # current active font color - MAIN
                     this_screen_border = colors["gray1"],
                     other_current_screen_border = colors["black"],
                     other_screen_border = colors["black"],
@@ -243,9 +243,9 @@ def init_widgets():
                     distro = "Arch_checkupdates",
                     update_interval = 1800,
                     display_format = "  {updates} ",
-                    foreground = colors["special"],
+                    foreground = colors["blue"],
                     background = colors["black"],
-                    colour_have_updates = colors["special"],
+                    colour_have_updates = colors["blue"],
                     colour_no_updates = colors["red"],
                     no_update_string="No Updates"
                     ),
@@ -264,7 +264,7 @@ def init_widgets():
                 #widget.Sep(),
                 widget.TextBox(
                     text="",
-                    foreground = colors["special"],
+                    foreground = colors["hint"],
                     ),
                 widget.Net(
                     format='  {down:6.2f}{down_suffix:<2} ↓↑ {up:6.2f}{up_suffix:<2}',
@@ -277,7 +277,7 @@ def init_widgets():
                 #widget.Sep(),
                 widget.TextBox(
                     text="",
-                    foreground = colors["special"],
+                    foreground = colors["hint"],
                     ),
                 widget.Memory(
                     format=" {MemUsed: .0f}{mm} ",
@@ -306,7 +306,7 @@ def init_widgets():
                 #    ),
                 widget.TextBox(
                     text="",
-                    foreground = colors["special"],
+                    foreground = colors["hint"],
                     ),
                 # widget.Backlight(
                 #     backlight_name = 'intel_backlight',
@@ -322,7 +322,7 @@ def init_widgets():
                 widget.TextBox(
                     #text='',
                     text="",
-                    foreground = colors["special"],
+                    foreground = colors["hint"],
                     ),
                 widget.Systray(),
                 #widget.QuickExit(), 
