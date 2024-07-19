@@ -8,7 +8,8 @@ from libqtile.lazy import lazy
 #from libqtile.utils import guess_terminal
 from typing import List # noqa: F401
 from libqtile.widget import spacer
-from themes.tokyonight import colors
+# from themes.tokyonight import colors
+from themes.monochrome import colors
 
 """from qtile_extras import widget 
 from qtile_extras.widget.decorations import BorderDecoration"""
@@ -143,11 +144,11 @@ groups.append(ScratchPad("6", [
 ]))
 
 
-colors = colors["night"]
+colors = colors["hack"]
 
 layout_theme = {"border_width": 2,
                 "margin": 4,
-                "border_focus": colors["magenta"],
+                "border_focus": colors["lack"],
                 "border_normal": colors["black"]
                 }
 
@@ -173,8 +174,8 @@ widget_defaults = dict(
     font="Hack Nerd Font",
     fontsize=14,
     padding=5,
-    foreground = colors["fg"],
-    background = colors["bg"],
+    foreground = colors["lack"],
+    background = colors["black"],
 
 )
 extension_defaults = widget_defaults.copy()
@@ -185,28 +186,28 @@ def init_widgets():
                 widget.CurrentLayout(
 		            font = "Hack Nerd Font",
 		            fontsize = 14,
-		            foreground = colors['cyan'],
+		            foreground = colors['warn'],
                     padding = 6.5,
                     fmt = '  {}'
                     ),
                 widget.TextBox(
                     text='',
                     #text="",
-                    foreground = colors["red"],
+                    foreground = colors["special"],
                     ),
 
        #widget.CurrentLayout(),
                 widget.GroupBox(
                     highlight_method="text", 
                     active = colors["amber"], # not current active font color
-                    inactive = colors["fg"],
+                    inactive = colors["hint"],
                     rounded = False,
                     disable_drag= True,
                     highlight_color = colors["red"],
-                    this_current_screen_border = colors["cyan"], # current active font color - MAIN
-                    this_screen_border = colors["magenta"],
-                    other_current_screen_border = colors["bg"],
-                    other_screen_border = colors["bg"],
+                    this_current_screen_border = colors["gray9"], # current active font color - MAIN
+                    this_screen_border = colors["gray1"],
+                    other_current_screen_border = colors["black"],
+                    other_screen_border = colors["black"],
                     urgent_border = colors["red"],
                     urgent_text= colors["red"],
                     #foreground = colors["fg"],
@@ -242,9 +243,9 @@ def init_widgets():
                     distro = "Arch_checkupdates",
                     update_interval = 1800,
                     display_format = "  {updates} ",
-                    foreground = colors["blue"],
-                    background = colors["bg"],
-                    colour_have_updates = colors["blue"],
+                    foreground = colors["special"],
+                    background = colors["black"],
+                    colour_have_updates = colors["special"],
                     colour_no_updates = colors["red"],
                     no_update_string="No Updates"
                     ),
@@ -263,7 +264,7 @@ def init_widgets():
                 #widget.Sep(),
                 widget.TextBox(
                     text="",
-                    foreground = colors["red"],
+                    foreground = colors["special"],
                     ),
                 widget.Net(
                     format='  {down:6.2f}{down_suffix:<2} ↓↑ {up:6.2f}{up_suffix:<2}',
@@ -276,7 +277,7 @@ def init_widgets():
                 #widget.Sep(),
                 widget.TextBox(
                     text="",
-                    foreground = colors["red"],
+                    foreground = colors["special"],
                     ),
                 widget.Memory(
                     format=" {MemUsed: .0f}{mm} ",
@@ -305,7 +306,7 @@ def init_widgets():
                 #    ),
                 widget.TextBox(
                     text="",
-                    foreground = colors["red"],
+                    foreground = colors["special"],
                     ),
                 # widget.Backlight(
                 #     backlight_name = 'intel_backlight',
@@ -321,7 +322,7 @@ def init_widgets():
                 widget.TextBox(
                     #text='',
                     text="",
-                    foreground = colors["red"],
+                    foreground = colors["special"],
                     ),
                 widget.Systray(),
                 #widget.QuickExit(), 
