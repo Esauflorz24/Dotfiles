@@ -1,6 +1,9 @@
 colors = {
     "hack":{
         "black" : ["#000000"],
+        "white" : ["#f7f7f7"],
+        "blue" : ["#2a7bde"],
+        "green" : ["#33d17a"],
         "gray1":["#080808"],
         "gray2": ["#191919"],
         "gray3": ["#2a2a2a"],
@@ -17,5 +20,6 @@ colors = {
         "lack": ["#7088aa"],
         "luster": ["#deeeed"],
         "amber" : ["#FFD65C"],
+        
     }
 }
