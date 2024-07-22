@@ -183,12 +183,15 @@ extension_defaults = widget_defaults.copy()
 
 def init_widgets():
     return [
+        widget.CurrentLayoutIcon(
+            foreground = '#33d17a',
+            scale=0.65
+        ),
                 widget.CurrentLayout(
 		            font = "Hack Nerd Font",
 		            fontsize = 14,
 		            foreground = colors['green'],
                     padding = 6.5,
-                    fmt = '  {}'
                     ),
                 widget.TextBox(
                     text='',
