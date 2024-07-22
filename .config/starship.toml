@@ -2,7 +2,7 @@
 
 palette = "catppuccin_mocha"
 
-format="$os $directory $git_branch $character"
+format="$os$directory $git_branch $character"
 
 [character]
 success_symbol = "[󰁔](subtext1)"
@@ -21,11 +21,11 @@ disabled = true
 [directory]
 truncation_length = 6
 truncate_to_repo = true
-format = "[  $path](fg:text italic)"
+format = "[$path](fg:text italic)"
 
 [os]
 format = "[$symbol]($style)"
-style = "bold green"
+style = "italic text"
 disabled = false
 
 [os.symbols]
