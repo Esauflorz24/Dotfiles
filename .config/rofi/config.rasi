@@ -12,19 +12,19 @@ configuration{
 @theme "/dev/null"
 
 * {
-    background : #11121d;
+    background : #101010;
     bg-alt : #444b6a;
 
-    foreground : #b9b9b9;
+    foreground : #f7f7f7;
     fg-alt : #787c99;
 
     background-color:  @background;
     text-color : @foreground;
 
     border: 0;
-    margin : 3;
+    margin : 1;
     padding :0;
-    spacing: 0;
+    spacing: 10;
 
     
 
