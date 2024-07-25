@@ -234,12 +234,17 @@ def init_widgets():
                     length = bar.STRETCH
                     #background = "#0080FF00"
                     ),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
+                widget.Clock(format=" %I:%M"),
+                widget.Spacer(
+                    length = bar.STRETCH
+                    #background = "#0080FF00"
+                    ),
+                # widget.Chord(
+                #     chords_colors={
+                #         "launch": ("#ff0000", "#ffffff"),
+                #     },
+                #     name_transform=lambda name: name.upper(),
+                # ),
                 #widget.TextBox("this is not default       ", name="default"),
                 #widget.Sep(),
                 widget.CheckUpdates(
@@ -270,7 +275,7 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Net(
-                    format='  {down:6.2f}{down_suffix:<2} ↓↑ {up:6.2f}{up_suffix:<2}',
+                    format=' {down:6.2f}{down_suffix:<2}  {up:6.2f}{up_suffix:<2}',
                     interface="wlan0",
                     ),
                 #widget.TextBox(
@@ -307,10 +312,7 @@ def init_widgets():
                 #    text='',
                 #    foreground = colors["red"],
                 #    ),
-                widget.TextBox(
-                    text="",
-                    foreground = colors["hint"],
-                    ),
+                
                 # widget.Backlight(
                 #     backlight_name = 'intel_backlight',
                 #     format = '  {percent:2.0%}',
@@ -321,7 +323,7 @@ def init_widgets():
                 #     foreground = colors["red"],
                 #     ),
                 #widget.Sep(),
-                widget.Clock(format="  %d-%m-%Y -  %I:%M"),
+                
                 widget.TextBox(
                     #text='',
                     text="",
