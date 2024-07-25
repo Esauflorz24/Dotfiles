@@ -12,7 +12,7 @@ configuration{
 @theme "/dev/null"
 
 * {
-    background : #101010;
+    background : #191919;
     bg-alt : #444b6a;
 
     foreground : #f7f7f7;
