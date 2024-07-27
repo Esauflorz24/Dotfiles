@@ -249,7 +249,7 @@ def init_widgets():
                 #widget.Sep(),
                 widget.CheckUpdates(
                     distro = "Arch_checkupdates",
-                    update_interval = 1800,
+                    update_interval = 5,
                     display_format = "  {updates} ",
                     foreground = colors["blue"],
                     background = colors["black"],
