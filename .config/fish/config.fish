@@ -20,7 +20,7 @@ alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push'
 
-
+# Fuente del script de configuración de fzf
 
 starship init fish | source
 
