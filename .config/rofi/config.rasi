@@ -5,7 +5,7 @@ configuration{
     font : "Hack Nerd Font 14";
     modi : "window,run,drun";
     show-icons : true;
-    icon-theme : "Papirus";
+    icon-theme : "Papirus-Dark";
 
 }
 
@@ -13,20 +13,37 @@ configuration{
 
 * {
     background : #191919;
-    bg-alt : #444b6a;
 
     foreground : #f7f7f7;
-    fg-alt : #787c99;
 
     background-color:  @background;
     text-color : @foreground;
 
-    border: 0;
-    margin : 1;
-    padding :1;
-    spacing: 10;
+    font: "Hack Nerd Font 13";
+}
 
-    
+window {
+    width : 700;
+    orientation: horizontal;
+    location: center;
+    border-radius: 6px;
+    spacing : 0;
+    anchor: center;
+}
+
+listview{
+    columns:1;
+    lines:9;
 
 
+}
+
+inputbar{
+
+    children : ["prompt","entry"];
+    spacing : 10px;
+}
+
+mainbox{
+    spacing : 10px;
 }
