@@ -105,9 +105,9 @@ groups = [
     Group('3', label="三", layout="max"),
     Group('4', label="五", layout="max", matches=[Match(wm_class=["spotify"])]), 
     Group('5', label="六", layout="max"), 
-    Group('6', label="七", layout="max"), 
-    Group('7', label="八", layout="max"), 
-    Group('8', label="九", layout="max"), 
+    # Group('6', label="七", layout="max"), 
+    # Group('7', label="八", layout="max"), 
+    # Group('8', label="九", layout="max"), 
     
 ]
 
@@ -194,7 +194,7 @@ def init_widgets():
                     padding = 6.5,
                     ),
                 widget.TextBox(
-                    text='',
+                    text='',
                     #text="",
                     foreground = colors["hint"],
                     ),
@@ -234,7 +234,7 @@ def init_widgets():
                     length = bar.STRETCH
                     #background = "#0080FF00"
                     ),
-                widget.Clock(format=" %I:%M"),
+                widget.Clock(format=" %I:%M%p"),
                 widget.Spacer(
                     length = bar.STRETCH
                     #background = "#0080FF00"
@@ -271,11 +271,11 @@ def init_widgets():
                 #    ),
                 #widget.Sep(),
                 widget.TextBox(
-                    text="",
+                    text="",
                     foreground = colors["hint"],
                     ),
                 widget.Net(
-                    format=' {down:6.2f}{down_suffix:<2}  {up:6.2f}{up_suffix:<2}',
+                    format='  {interface}: {total} {total_suffix}',
                     interface="wlan0",
                     ),
                 #widget.TextBox(
@@ -284,11 +284,11 @@ def init_widgets():
                 #    ),
                 #widget.Sep(),
                 widget.TextBox(
-                    text="",
+                    text="",
                     foreground = colors["hint"],
                     ),
                 widget.Memory(
-                    format=" {MemUsed: .0f}{mm} ",
+                    format=" {MemUsed: .0f}{mm} ",
                     update_interval = 0.5
                     ),
                 #widget.TextBox(
@@ -326,7 +326,7 @@ def init_widgets():
                 
                 widget.TextBox(
                     #text='',
-                    text="",
+                    text="",
                     foreground = colors["hint"],
                     ),
                 widget.Systray(),
