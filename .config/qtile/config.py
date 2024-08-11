@@ -2,18 +2,15 @@ import os
 import re
 import socket
 import subprocess
-from libqtile import bar, layout, hook, extension
+from libqtile import bar, layout, hook, extension,qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown, KeyChord
 from libqtile.lazy import lazy
-#from libqtile.utils import guess_terminal
 from typing import List # noqa: F401
 # from themes.tokyonight import colors
 from themes.monochrome import colors
 from qtile_extras import widget
 
 
-"""from qtile_extras import widget 
-from qtile_extras.widget.decorations import BorderDecoration"""
 from libqtile.log_utils import logger
 
 mod = "mod4"
@@ -235,7 +232,13 @@ def init_widgets():
                     length = bar.STRETCH
                     #background = "#0080FF00"
                     ),
-                widget.Clock(format=" %I:%M%p"),
+                widget.Clock(
+                        format=' %I:%M %p ',
+                        font = 'Hack Nerd font',
+                        fontsize = 14,
+                        background = colors["black"],
+                        foreground = colors["white"]
+                    ),
                 widget.Spacer(
                     length = bar.STRETCH
                     #background = "#0080FF00"
