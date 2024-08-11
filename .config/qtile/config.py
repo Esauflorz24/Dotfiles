@@ -2,14 +2,15 @@ import os
 import re
 import socket
 import subprocess
-from libqtile import bar, layout, widget, hook, extension
+from libqtile import bar, layout, hook, extension
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown, KeyChord
 from libqtile.lazy import lazy
 #from libqtile.utils import guess_terminal
 from typing import List # noqa: F401
-from libqtile.widget import spacer
 # from themes.tokyonight import colors
 from themes.monochrome import colors
+from qtile_extras import widget
+
 
 """from qtile_extras import widget 
 from qtile_extras.widget.decorations import BorderDecoration"""
@@ -190,7 +191,7 @@ def init_widgets():
                 widget.CurrentLayout(
 		            font = "Hack Nerd Font",
 		            fontsize = 14,
-		            foreground = colors['green'],
+		            foreground = colors['white'],
                     padding = 6.5,
                     ),
                 widget.TextBox(
@@ -329,6 +330,28 @@ def init_widgets():
                     text="",
                     foreground = colors["hint"],
                     ),
+                widget.UPowerWidget(
+                    battery_name='BAT0',
+                    border_charge_colour='#00FF00',
+                    border_colour=colors['gray6'],
+                    border_critical_colour='#FF0000',
+                    percentage_low=0.15,
+                    percentage_critical=0.05,
+                    margin=3,
+                    update_interval=10,
+                    battery_width=30,
+                    battery_height = 13,
+                    background='#000000',
+                    text_discharging = '({percentage:.0f}%) {tte} until empty',
+                    text_displaytime = 5
+
+                ),
+                widget.TextBox(
+                    #text='',
+                    text="",
+                    foreground = colors["hint"],
+                    ),
+
                 widget.Systray(),
                 #widget.QuickExit(), 
     ]
