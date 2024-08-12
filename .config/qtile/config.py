@@ -342,7 +342,7 @@ def init_widgets():
                     percentage_critical=0.05,
                     margin=3,
                     update_interval=10,
-                    battery_width=30,
+                    battery_width=25,
                     battery_height = 13,
                     background='#000000',
                     text_discharging = '({percentage:.0f}%) {tte} until empty',
