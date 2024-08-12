@@ -50,7 +50,7 @@ return {
 				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 			end
 
-			local servers = { "clangd", "tsserver", "pyright", "lua_ls" }
+			local servers = { "clangd", "tsserver", "pyright", "lua_ls","bashls" }
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup({
 					capabilities = capabilities,
