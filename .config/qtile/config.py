@@ -279,7 +279,7 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Net(
-                    format='  {interface}: {total} {total_suffix}',
+                    format='  {interface}: {total:.0f} {total_suffix}',
                     interface="wlan0",
                     ),
                 #widget.TextBox(
@@ -292,7 +292,7 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Memory(
-                    format=" {MemUsed: .0f}{mm} ",
+                    format=" {MemUsed: .0f}{mm} ",
                     update_interval = 0.5
                     ),
                 #widget.TextBox(
