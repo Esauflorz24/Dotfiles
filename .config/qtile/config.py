@@ -196,26 +196,16 @@ def init_widgets():
                     #text="",
                     foreground = colors["hint"],
                     ),
+                widget.Clock(
+                        format=' %d/%m/%y   %I:%M %p ',
+                        font = 'Hack Nerd font',
+                        fontsize = 14,
+                        background = colors["black"],
+                        foreground = colors["white"]
+                    ),
 
        #widget.CurrentLayout(),
-                widget.GroupBox(
-                    highlight_method="text", 
-                    active = colors["green"], # not current active font color
-                    inactive = colors["gray6"],
-                    rounded = False,
-                    disable_drag= True,
-                    highlight_color = colors["red"],
-                    this_current_screen_border = colors["white"], # current active font color - MAIN
-                    this_screen_border = colors["gray1"],
-                    other_current_screen_border = colors["black"],
-                    other_screen_border = colors["black"],
-                    urgent_border = colors["red"],
-                    urgent_text= colors["red"],
-                    #foreground = colors["fg"],
-                    #background = colors["red"],
-                    #hide_unused=True,
-                    ),
-                widget.Prompt(),
+                
                                # widget.WindowName(
                 #     format = "{name}",
                 #     max_chars = 25,
@@ -232,12 +222,22 @@ def init_widgets():
                     length = bar.STRETCH
                     #background = "#0080FF00"
                     ),
-                widget.Clock(
-                        format=' %I:%M %p ',
-                        font = 'Hack Nerd font',
-                        fontsize = 14,
-                        background = colors["black"],
-                        foreground = colors["white"]
+                widget.GroupBox(
+                    highlight_method="text", 
+                    active = colors["green"], # not current active font color
+                    inactive = colors["gray6"],
+                    rounded = False,
+                    disable_drag= True,
+                    highlight_color = colors["red"],
+                    this_current_screen_border = colors["white"], # current active font color - MAIN
+                    this_screen_border = colors["gray1"],
+                    other_current_screen_border = colors["black"],
+                    other_screen_border = colors["black"],
+                    urgent_border = colors["red"],
+                    urgent_text= colors["red"],
+                    #foreground = colors["fg"],
+                    #background = colors["red"],
+                    #hide_unused=True,
                     ),
                 widget.Spacer(
                     length = bar.STRETCH
