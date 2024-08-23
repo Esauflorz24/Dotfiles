@@ -292,8 +292,8 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Memory(
-                    format=" {MemUsed: .0f}{mm} ",
-                    update_interval = 0.5
+                    format="  {MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
+                    measure_mem = 'G',
                     ),
                 #widget.TextBox(
                 #    text='',
