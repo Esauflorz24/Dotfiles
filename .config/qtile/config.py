@@ -197,11 +197,13 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Clock(
-                        format=' %d/%m/%y   %I:%M %p ',
+                        format='%A - %I:%M %p ',
+                        long_format="%B %-d, %Y ",
                         font = 'Hack Nerd font',
                         fontsize = 14,
                         background = colors["black"],
-                        foreground = colors["white"]
+                        foreground = colors["white"],
+                        padding = 7
                     ),
 
        #widget.CurrentLayout(),
@@ -254,7 +256,7 @@ def init_widgets():
                 widget.CheckUpdates(
                     distro = "Arch_checkupdates",
                     update_interval = 5,
-                    display_format = "  {updates} ",
+                    display_format = "  {updates} ",
                     foreground = colors["blue"],
                     background = colors["black"],
                     colour_have_updates = colors["blue"],
@@ -363,7 +365,7 @@ def init_widgets():
 
 
 def status_bar(widgets):
-    return bar.Bar(widgets, 30, margin = [5, 5, 3, 5])
+    return bar.Bar(widgets, 32, margin = [5, 5, 3, 5])
 
 
 screens = [Screen(top=status_bar(init_widgets()))]
