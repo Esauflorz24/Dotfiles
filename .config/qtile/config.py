@@ -113,7 +113,6 @@ groups = [
 for i in groups:
     keys.extend(
         [
-            # mod1 + letter of group = switch to group
             Key(
                 [mod],
                 i.name,
@@ -127,10 +126,6 @@ for i in groups:
                 lazy.window.togroup(i.name, switch_group=True),
                 desc="Switch to & move focused window to group {}".format(i.name),
             ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod1 + shift + letter of group = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
         ]
     )
 
@@ -206,13 +201,7 @@ def init_widgets():
                         padding = 7
                     ),
 
-       #widget.CurrentLayout(),
                 
-                               # widget.WindowName(
-                #     format = "{name}",
-                #     max_chars = 25,
-                #     empty_group_string = 'Desktop',
-                # # ),
                 # widget.CurrentLayoutIcon(
                 #     foreground = colors['amber'],
                 #     padding = 5,
@@ -358,7 +347,6 @@ def init_widgets():
                     ),
 
                 widget.Systray(),
-                #widget.QuickExit(), 
     ]
         
 
@@ -390,7 +378,6 @@ else:
     resolutions = map(lambda output: output.split(" ")[2], xrandr_output) 
     connected_monitors = len([r for r in resolutions if not r.startswith("(")])
 
-# This is for my setup only, which has 3 different resolution monitors
 # if connected_monitors == 3:
 #     screens = [Screen(top=status_bar(secondary_widgets()))]
 #     screens.append(Screen(top=status_bar(secondary_widgets())))
