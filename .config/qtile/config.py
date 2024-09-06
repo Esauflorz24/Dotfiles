@@ -270,7 +270,7 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Net(
-                    format='  {interface}: {total:.0f} {total_suffix}',
+                    format='󰈀  {interface}: {total:.0f} {total_suffix}',
                     interface="wlan0",
                     ),
                 #widget.TextBox(
