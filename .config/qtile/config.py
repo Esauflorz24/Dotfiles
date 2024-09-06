@@ -101,7 +101,7 @@ groups = [
     Group('1',label="一",layout="max"),
     Group('2', label="二", layout="max", matches=[Match(wm_class=["firefox","librewolf"])]),
     Group('3', label="三", layout="max"),
-    Group('4', label="五", layout="max", matches=[Match(wm_class=["spotify"])]), 
+    Group('4', label="五", layout="max"), 
     Group('5', label="六", layout="max"), 
     # Group('6', label="七", layout="max"), 
     # Group('7', label="八", layout="max"), 
