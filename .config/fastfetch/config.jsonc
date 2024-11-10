@@ -19,32 +19,32 @@
     {
       "type": "os",
       "key": "  ",
-      "keyColor": "blue"
+      "keyColor": "cyan"
     },
     {
       "type": "kernel",
       "key": "  ",
-      "keyColor": "white"
+      "keyColor": "cyan"
     },
     {
       "type": "packages",
       "key": "  󰮯",
-      "keyColor": "yellow"
+      "keyColor": "cyan"
     },
     {
       "type": "wm",
       "key": "  󰨇",
-      "keyColor": "blue"
+      "keyColor": "cyan"
     },
     {
       "type": "terminal",
       "key": "  ",
-      "keyColor": "magenta"
+      "keyColor": "cyan"
     },
     {
       "type": "shell",
       "key": "  ",
-      "keyColor": "yellow"
+      "keyColor": "cyan"
     },
     "break",
     {
@@ -55,27 +55,27 @@
     {
       "type": "host",
       "key": "  ",
-      "keyColor": "bright_blue"
+      "keyColor": "cyan"
     },
     {
       "type": "cpu",
       "key": "  ",
-      "keyColor": "bright_green"
+      "keyColor": "cyan"
     },
     {
       "type": "gpu",
       "key": "  󱤓",
-      "keyColor": "red"
+      "keyColor": "cyan"
     },
     {
       "type": "memory",
       "key": "  󰍛",
-      "keyColor": "bright_yellow"
+      "keyColor": "cyan"
     },
     {
       "type": "disk",
       "key": "  ",
-      "keyColor": "bright_cyan"
+      "keyColor": "cyan"
     },
     "break",
     {
