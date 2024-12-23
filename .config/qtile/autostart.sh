@@ -7,3 +7,4 @@ nm-applet &
 volumeicon &
 
 
+
