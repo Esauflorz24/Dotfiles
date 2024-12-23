@@ -8,7 +8,7 @@ from libqtile.lazy import lazy
 from typing import List # noqa: F401
 # from themes.tokyonight import colors
 from themes.monochrome import colors
-from qtile_extras import widget
+from qtile_extras import widget 
 
 
 from libqtile.log_utils import logger
