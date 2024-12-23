@@ -22,7 +22,7 @@ return {
         lazy = false,
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "clangd", "pyright", "bashls", "tsserver" },
+                ensure_installed = { "lua_ls", "clangd", "pyright", "bashls", "tsserver","jdtls" },
                 automatic_installation = true,
             })
         end,
@@ -62,7 +62,7 @@ return {
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
             end
 
-            local servers = { "clangd", "tsserver", "pyright", "lua_ls", "bashls" }
+            local servers = { "clangd", "tsserver", "pyright", "lua_ls", "bashls" ,"jdtls"}
             for _, lsp in ipairs(servers) do
                 lspconfig[lsp].setup({
                     capabilities = capabilities,
