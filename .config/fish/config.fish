@@ -20,6 +20,8 @@ alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push'
 
+set -Ux PATH $HOME/.dotnet/tools $PATH
+
 # Fuente del script de configuración de fzf
 
 starship init fish | source
