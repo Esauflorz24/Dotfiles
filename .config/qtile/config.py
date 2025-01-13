@@ -192,8 +192,7 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Clock(
-                        format='%A - %I:%M %p ',
-                        long_format="%B %-d, %Y ",
+                        format='%A - %H:%M',
                         font = 'Hack Nerd font',
                         fontsize = 14,
                         background = colors["black"],
@@ -246,10 +245,10 @@ def init_widgets():
                     distro = "Arch_checkupdates",
                     update_interval = 5,
                     display_format = "  {updates} ",
-                    foreground = colors["blue"],
+                    foreground = colors["white"],
                     background = colors["black"],
-                    colour_have_updates = colors["blue"],
-                    colour_no_updates = colors["red"],
+                    colour_have_updates = colors["white"],
+                    colour_no_updates = colors["white"],
                     no_update_string="No Updates"
                     ),
                 #widget.TextBox(
