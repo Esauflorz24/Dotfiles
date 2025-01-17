@@ -164,7 +164,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="Hack Nerd Font",
+    font="FiraCode Nerd Font Bold",
     fontsize=14,
     padding=5,
     foreground = colors["white"],
@@ -181,8 +181,6 @@ def init_widgets():
             scale=0.65
         ),
                 widget.CurrentLayout(
-		            font = "Hack Nerd Font",
-		            fontsize = 14,
 		            foreground = colors['white'],
                     padding = 6.5,
                     ),
@@ -193,8 +191,6 @@ def init_widgets():
                     ),
                 widget.Clock(
                         format='%A - %H:%M',
-                        font = 'Hack Nerd font',
-                        fontsize = 14,
                         background = colors["black"],
                         foreground = colors["white"],
                         padding = 7
@@ -269,7 +265,7 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Net(
-                    format='󰈀  {interface}: {total:.0f} {total_suffix}',
+                    format='  {total:.0f} {total_suffix}',
                     interface="wlan0",
                     ),
                 #widget.TextBox(
@@ -282,7 +278,7 @@ def init_widgets():
                     foreground = colors["hint"],
                     ),
                 widget.Memory(
-                    format="  {MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
+                    format=" {MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
                     measure_mem = 'G',
                     ),
                 #widget.TextBox(
