@@ -210,8 +210,8 @@ def init_widgets():
                     ),
                 widget.GroupBox(
                     highlight_method="text", 
-                    active = colors["green"], # not current active font color
-                    inactive = colors["gray6"],
+                    active = colors["gray5"], # not current active font color
+                    inactive = colors["gray7"],
                     rounded = False,
                     disable_drag= True,
                     highlight_color = colors["red"],
