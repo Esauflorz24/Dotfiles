@@ -196,14 +196,6 @@ def init_widgets():
                         padding = 7
                     ),
 
-                
-                # widget.CurrentLayoutIcon(
-                #     foreground = colors['amber'],
-                #     padding = 5,
-                #     scale = 0.6,
-                #     format = ' {}'
-                #     ),
-                
                 widget.Spacer(
                     length = bar.STRETCH
                     #background = "#0080FF00"
