@@ -232,7 +232,7 @@ def init_widgets():
                 widget.CheckUpdates(
                     distro = "Arch_checkupdates",
                     update_interval = 5,
-                    display_format = "  {updates} ",
+                    display_format = "  {updates} ",
                     foreground = colors["white"],
                     background = colors["black"],
                     colour_have_updates = colors["white"],
