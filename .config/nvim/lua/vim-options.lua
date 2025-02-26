@@ -9,7 +9,7 @@ vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
 vim.o.cursorline = true
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "80"
 
