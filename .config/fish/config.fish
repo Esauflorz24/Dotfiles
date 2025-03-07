@@ -20,6 +20,8 @@ alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push'
 
+set -Ux JAVA_HOME /usr/lib/jvm/java-21-openjdk
+
 set -Ux PATH $HOME/.dotnet/tools $PATH
 
 # Fuente del script de configuración de fzf
