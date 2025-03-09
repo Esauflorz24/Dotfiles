@@ -5,7 +5,7 @@ return {
 		local toggleterm = require("toggleterm")
 
 		toggleterm.setup({
-			size = 15,
+			size = 20,
 			open_mapping = [[<c-\>]],
 			shade_filetypes = {},
 			shade_terminal = true,
@@ -15,10 +15,10 @@ return {
 			direction = "horizontal",
 			autochdir = true,
 			float_opts = {
-				border = "double",
-				width = 100,
-				height = 20,
+				border = "curved",
+				width = 125,
+				height = 35,
 			},
 		})
-	end
+	end,
 }
