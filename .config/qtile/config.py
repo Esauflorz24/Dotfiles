@@ -2,13 +2,24 @@ import os
 import re
 import socket
 import subprocess
-from libqtile import bar, layout, hook, extension,qtile
-from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown, KeyChord
+from libqtile import bar, layout, hook, extension, qtile
+from libqtile.config import (
+    Click,
+    Drag,
+    Group,
+    Key,
+    Match,
+    Screen,
+    ScratchPad,
+    DropDown,
+    KeyChord,
+)
 from libqtile.lazy import lazy
-from typing import List # noqa: F401
+from typing import List  # noqa: F401
+
 # from themes.tokyonight import colors
 from themes.monochrome import colors
-from qtile_extras import widget 
+from qtile_extras import widget
 
 
 from libqtile.log_utils import logger
@@ -17,96 +28,85 @@ mod = "mod4"
 terminal = "kitty"
 browser = "firefox"
 
-keys = [Key(key[0], key[1], *key[2:]) for key in [
-    # ------------ Window Configs ------------
-
-    # Switch between windows in current stack pane
-    ([mod], "j", lazy.layout.down()),
-    ([mod], "k", lazy.layout.up()),
-    ([mod], "h", lazy.layout.left()),
-    ([mod], "l", lazy.layout.right()),
-
-    # Change window sizes (MonadTall)
-    ([mod, "shift"], "l", lazy.layout.grow()),
-    ([mod, "shift"], "h", lazy.layout.shrink()),
-
-    # Toggle floating
-    ([mod, "shift"], "f", lazy.window.toggle_floating()),
-
-    # Move windows up or down in current stack
-    ([mod, "shift"], "j", lazy.layout.shuffle_down()),
-    ([mod, "shift"], "k", lazy.layout.shuffle_up()),
-
-    # Toggle between different layouts as defined below
-    ([mod], "Tab", lazy.next_layout()),
-    ([mod, "shift"], "Tab", lazy.prev_layout()),
-
-    # Kill window
-    ([mod], "w", lazy.window.kill()),
-
-    # Switch focus of monitors
-    ([mod], "period", lazy.next_screen()),
-    ([mod], "comma", lazy.prev_screen()),
-
-    # Restart Qtile
-    ([mod, "control"], "r", lazy.restart()),
-
-    ([mod, "control"], "q", lazy.shutdown()),
-    ([mod], "r", lazy.spawncmd()),
-
-    # ------------ App Configs ------------
-
-    # Menu
-    ([mod], "m", lazy.spawn("rofi -show drun")),
-
-    # Window Nav
-    ([mod, "shift"], "m", lazy.spawn("rofi -show")),
-
-    # Browser
-    ([mod], "b", lazy.spawn("librewolf")),
-
-    # File Explorer
-    ([mod], "e", lazy.spawn("thunar")),
-
-    # Terminal
-    ([mod], "Return", lazy.spawn("kitty")),
-
-    # Redshift
-    ([mod], "r", lazy.spawn("redshift -O 2400")),
-    ([mod, "shift"], "r", lazy.spawn("redshift -x")),
-
-    # Screenshot
-    ([mod], "s", lazy.spawn("scrot")),
-    ([mod, "shift"], "s", lazy.spawn("scrot -s")),
-
-    # ------------ Hardware Configs ------------
-
-    # Volume
-    ([], "XF86AudioLowerVolume", lazy.spawn(
-        "pactl set-sink-volume @DEFAULT_SINK@ -5%"
-    )),
-    ([], "XF86AudioRaiseVolume", lazy.spawn(
-        "pactl set-sink-volume @DEFAULT_SINK@ +5%"
-    )),
-    ([], "XF86AudioMute", lazy.spawn(
-        "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-    )),
-
-    # Brightness
-    ([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +5%")),
-    ([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-")),
-]]
+keys = [
+    Key(key[0], key[1], *key[2:])
+    for key in [
+        # ------------ Window Configs ------------
+        # Switch between windows in current stack pane
+        ([mod], "j", lazy.layout.down()),
+        ([mod], "k", lazy.layout.up()),
+        ([mod], "h", lazy.layout.left()),
+        ([mod], "l", lazy.layout.right()),
+        # Change window sizes (MonadTall)
+        ([mod, "shift"], "l", lazy.layout.grow()),
+        ([mod, "shift"], "h", lazy.layout.shrink()),
+        # Toggle floating
+        ([mod, "shift"], "f", lazy.window.toggle_floating()),
+        # Move windows up or down in current stack
+        ([mod, "shift"], "j", lazy.layout.shuffle_down()),
+        ([mod, "shift"], "k", lazy.layout.shuffle_up()),
+        # Toggle between different layouts as defined below
+        ([mod], "Tab", lazy.next_layout()),
+        ([mod, "shift"], "Tab", lazy.prev_layout()),
+        # Kill window
+        ([mod], "w", lazy.window.kill()),
+        # Switch focus of monitors
+        ([mod], "period", lazy.next_screen()),
+        ([mod], "comma", lazy.prev_screen()),
+        # Restart Qtile
+        ([mod, "control"], "r", lazy.restart()),
+        ([mod, "control"], "q", lazy.shutdown()),
+        ([mod], "r", lazy.spawncmd()),
+        # ------------ App Configs ------------
+        # Menu
+        ([mod], "m", lazy.spawn("rofi -show drun")),
+        # Window Nav
+        ([mod, "shift"], "m", lazy.spawn("rofi -show")),
+        # Browser
+        ([mod], "b", lazy.spawn("librewolf")),
+        # File Explorer
+        ([mod], "e", lazy.spawn("thunar")),
+        # Terminal
+        ([mod], "Return", lazy.spawn("kitty")),
+        # Redshift
+        ([mod], "r", lazy.spawn("redshift -O 2400")),
+        ([mod, "shift"], "r", lazy.spawn("redshift -x")),
+        # Screenshot
+        ([mod], "s", lazy.spawn("scrot")),
+        ([mod, "shift"], "s", lazy.spawn("scrot -s")),
+        # ------------ Hardware Configs ------------
+        # Volume
+        (
+            [],
+            "XF86AudioLowerVolume",
+            lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"),
+        ),
+        (
+            [],
+            "XF86AudioRaiseVolume",
+            lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%"),
+        ),
+        ([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
+        # Brightness
+        ([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +5%")),
+        ([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-")),
+    ]
+]
 
 groups = [
-    Group('1',label="一",layout="max"),
-    Group('2', label="二", layout="max", matches=[Match(wm_class=["firefox","librewolf"])]),
-    Group('3', label="三", layout="max"),
-    Group('4', label="五", layout="max"), 
-    Group('5', label="六", layout="max"), 
-    # Group('6', label="七", layout="max"), 
-    # Group('7', label="八", layout="max"), 
-    # Group('8', label="九", layout="max"), 
-    
+    Group("1", label="一", layout="max"),
+    Group(
+        "2",
+        label="二",
+        layout="max",
+        matches=[Match(wm_class=["firefox", "librewolf"])],
+    ),
+    Group("3", label="三", layout="max"),
+    Group("4", label="五", layout="max"),
+    Group("5", label="六", layout="max"),
+    # Group('6', label="七", layout="max"),
+    # Group('7', label="八", layout="max"),
+    # Group('8', label="九", layout="max"),
 ]
 
 
@@ -129,25 +129,62 @@ for i in groups:
         ]
     )
 
-groups.append(ScratchPad("6", [
-    DropDown("chatgpt", "chromium --app=https://chat.openai.com", x=0.3, y=0.1, width=0.40, height=0.4, on_focus_lost_hide=False ),
-    DropDown("mousepad", "mousepad", x=0.3, y=0.1, width=0.40, height=0.4, on_focus_lost_hide=False ),
-    DropDown("terminal", "alacritty", x=0.3, y=0.1, width=0.40, height=0.4, on_focus_lost_hide=False ),
-    DropDown("scrcpy", "scrcpy -d", x=0.8, y=0.05, width=0.15, height=0.6, on_focus_lost_hide=False )
-]))
+groups.append(
+    ScratchPad(
+        "6",
+        [
+            DropDown(
+                "chatgpt",
+                "chromium --app=https://chat.openai.com",
+                x=0.3,
+                y=0.1,
+                width=0.40,
+                height=0.4,
+                on_focus_lost_hide=False,
+            ),
+            DropDown(
+                "mousepad",
+                "mousepad",
+                x=0.3,
+                y=0.1,
+                width=0.40,
+                height=0.4,
+                on_focus_lost_hide=False,
+            ),
+            DropDown(
+                "terminal",
+                "alacritty",
+                x=0.3,
+                y=0.1,
+                width=0.40,
+                height=0.4,
+                on_focus_lost_hide=False,
+            ),
+            DropDown(
+                "scrcpy",
+                "scrcpy -d",
+                x=0.8,
+                y=0.05,
+                width=0.15,
+                height=0.6,
+                on_focus_lost_hide=False,
+            ),
+        ],
+    )
+)
 
 
 colors = colors["hack"]
 
-layout_theme = {"border_width": 2,
-                "margin": 4,
-                "border_focus": colors["white"],
-                "border_normal": colors["black"]
-                }
+layout_theme = {
+    "border_width": 2,
+    "margin": 4,
+    "border_focus": colors["white"],
+    "border_normal": colors["black"],
+}
 
 layouts = [
-    #layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    
+    # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -155,7 +192,6 @@ layouts = [
     layout.Max(**layout_theme),
     layout.MonadTall(**layout_theme),
     layout.MonadWide(**layout_theme),
-    
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
@@ -167,180 +203,171 @@ widget_defaults = dict(
     font="FiraCode Nerd Font Bold",
     fontsize=14,
     padding=5,
-    foreground = colors["white"],
-    background = colors["black"],
-
+    foreground=colors["white"],
+    background=colors["black"],
 )
 extension_defaults = widget_defaults.copy()
 
 
 def init_widgets():
     return [
-        widget.CurrentLayoutIcon(
-            foreground = '#33d17a',
-            scale=0.65
+        widget.CurrentLayoutIcon(foreground="#33d17a", scale=0.65),
+        widget.CurrentLayout(
+            foreground=colors["white"],
+            padding=6.5,
         ),
-                widget.CurrentLayout(
-		            foreground = colors['white'],
-                    padding = 6.5,
-                    ),
-                widget.TextBox(
-                    text='',
-                    #text="",
-                    foreground = colors["hint"],
-                    ),
-                widget.Clock(
-                        format='%A - %H:%M',
-                        background = colors["black"],
-                        foreground = colors["white"],
-                        padding = 7
-                    ),
-
-                widget.Spacer(
-                    length = bar.STRETCH
-                    #background = "#0080FF00"
-                    ),
-                widget.GroupBox(
-                    highlight_method="text", 
-                    active = colors["gray5"], # not current active font color
-                    inactive = colors["gray7"],
-                    rounded = False,
-                    disable_drag= True,
-                    highlight_color = colors["red"],
-                    this_current_screen_border = colors["white"], # current active font color - MAIN
-                    this_screen_border = colors["gray1"],
-                    other_current_screen_border = colors["black"],
-                    other_screen_border = colors["black"],
-                    urgent_border = colors["red"],
-                    urgent_text= colors["red"],
-                    #foreground = colors["fg"],
-                    #background = colors["red"],
-                    #hide_unused=True,
-                    ),
-                widget.Spacer(
-                    length = bar.STRETCH
-                    #background = "#0080FF00"
-                    ),
-                # widget.Chord(
-                #     chords_colors={
-                #         "launch": ("#ff0000", "#ffffff"),
-                #     },
-                #     name_transform=lambda name: name.upper(),
-                # ),
-                #widget.TextBox("this is not default       ", name="default"),
-                #widget.Sep(),
-                widget.CheckUpdates(
-                    distro = "Arch_checkupdates",
-                    update_interval = 5,
-                    display_format = " {updates} ",
-                    foreground = colors["white"],
-                    background = colors["black"],
-                    colour_have_updates = colors["white"],
-                    colour_no_updates = colors["white"],
-                    no_update_string="No Updates"
-                    ),
-                #widget.TextBox(
-                #    text="",
-                #    foreground = colors["red"],
-                #    ),
-                # widget.Wttr(
-                #     location={'El Salvador': 'home'},
-                #     format = '%C, %t'
-                #     ),
-                # #widget.TextBox(
-                #    text='',
-                #    foreground = colors["red"],
-                #    ),
-                #widget.Sep(),
-                widget.TextBox(
-                    text="",
-                    foreground = colors["hint"],
-                    ),
-                widget.Net(
-                    format='  {total:.0f} {total_suffix}',
-                    interface="wlan0",
-                    ),
-                #widget.TextBox(
-                #    text='',
-                #    foreground = colors["red"],
-                #    ),
-                #widget.Sep(),
-                widget.TextBox(
-                    text="",
-                    foreground = colors["hint"],
-                    ),
-                widget.Memory(
-                    format=" {MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
-                    measure_mem = 'G',
-                    ),
-                #widget.TextBox(
-                #    text='',
-                #    foreground = colors["red"],
-                #    ),
-                # widget.TextBox(
-                #     text="",
-                #     foreground = colors["red"],
-                #     ),
-                # #widget.Sep(),
-                # widget.ThermalSensor(
-                #     format=' {temp:.0f}{unit}',
-                #     tag_sensor='Tctl',
-                #     threshold=60,
-                #     foreground_alert=colors["red"],
-                #     foreground = colors["fg"],
-                #     ),
-                # #widget.Sep(),
-                #widget.TextBox(
-                #    text='',
-                #    foreground = colors["red"],
-                #    ),
-                
-                # widget.Backlight(
-                #     backlight_name = 'intel_backlight',
-                #     format = '  {percent:2.0%}',
-                #     ),
-                # widget.TextBox(
-                #     #text='',
-                #     text="",
-                #     foreground = colors["red"],
-                #     ),
-                #widget.Sep(),
-                
-                widget.TextBox(
-                    #text='',
-                    text="",
-                    foreground = colors["hint"],
-                    ),
-                widget.UPowerWidget(
-                    battery_name='BAT0',
-                    border_charge_colour='#00FF00',
-                    border_colour=colors['gray6'],
-                    border_critical_colour='#FF0000',
-                    percentage_low=0.15,
-                    percentage_critical=0.05,
-                    margin=3,
-                    update_interval=10,
-                    battery_width=25,
-                    battery_height = 13,
-                    background='#000000',
-                    text_discharging = '({percentage:.0f}%) {tte} until empty',
-                    text_displaytime = 5
-
-                ),
-                widget.TextBox(
-                    #text='',
-                    text="",
-                    foreground = colors["hint"],
-                    ),
-
-                widget.Systray(),
+        widget.TextBox(
+            text="",
+            # text="",
+            foreground=colors["hint"],
+        ),
+        widget.Clock(
+            format="%A - %H:%M",
+            background=colors["black"],
+            foreground=colors["white"],
+            padding=7,
+        ),
+        widget.Spacer(
+            length=bar.STRETCH
+            # background = "#0080FF00"
+        ),
+        widget.GroupBox(
+            highlight_method="text",
+            active=colors["gray5"],  # not current active font color
+            inactive=colors["gray7"],
+            rounded=False,
+            disable_drag=True,
+            highlight_color=colors["red"],
+            this_current_screen_border=colors[
+                "white"
+            ],  # current active font color - MAIN
+            this_screen_border=colors["gray1"],
+            other_current_screen_border=colors["black"],
+            other_screen_border=colors["black"],
+            urgent_border=colors["red"],
+            urgent_text=colors["red"],
+            # foreground = colors["fg"],
+            # background = colors["red"],
+            # hide_unused=True,
+        ),
+        widget.Spacer(
+            length=bar.STRETCH
+            # background = "#0080FF00"
+        ),
+        # widget.Chord(
+        #     chords_colors={
+        #         "launch": ("#ff0000", "#ffffff"),
+        #     },
+        #     name_transform=lambda name: name.upper(),
+        # ),
+        # widget.TextBox("this is not default       ", name="default"),
+        # widget.Sep(),
+        widget.CheckUpdates(
+            distro="Arch_checkupdates",
+            update_interval=5,
+            display_format=" {updates} ",
+            foreground=colors["white"],
+            background=colors["black"],
+            colour_have_updates=colors["white"],
+            colour_no_updates=colors["white"],
+            no_update_string="No Updates",
+        ),
+        # widget.TextBox(
+        #    text="",
+        #    foreground = colors["red"],
+        #    ),
+        # widget.Wttr(
+        #     location={'El Salvador': 'home'},
+        #     format = '%C, %t'
+        #     ),
+        # #widget.TextBox(
+        #    text='',
+        #    foreground = colors["red"],
+        #    ),
+        # widget.Sep(),
+        widget.TextBox(
+            text="",
+            foreground=colors["hint"],
+        ),
+        widget.Net(
+            format="  {total:.0f} {total_suffix}",
+            interface="wlan0",
+        ),
+        # widget.TextBox(
+        #    text='',
+        #    foreground = colors["red"],
+        #    ),
+        # widget.Sep(),
+        widget.TextBox(
+            text="",
+            foreground=colors["hint"],
+        ),
+        widget.Memory(
+            format=" {MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
+            measure_mem="G",
+        ),
+        # widget.TextBox(
+        #    text='',
+        #    foreground = colors["red"],
+        #    ),
+        # widget.TextBox(
+        #     text="",
+        #     foreground = colors["red"],
+        #     ),
+        # #widget.Sep(),
+        # widget.ThermalSensor(
+        #     format=' {temp:.0f}{unit}',
+        #     tag_sensor='Tctl',
+        #     threshold=60,
+        #     foreground_alert=colors["red"],
+        #     foreground = colors["fg"],
+        #     ),
+        # #widget.Sep(),
+        # widget.TextBox(
+        #    text='',
+        #    foreground = colors["red"],
+        #    ),
+        # widget.Backlight(
+        #     backlight_name = 'intel_backlight',
+        #     format = '  {percent:2.0%}',
+        #     ),
+        # widget.TextBox(
+        #     #text='',
+        #     text="",
+        #     foreground = colors["red"],
+        #     ),
+        # widget.Sep(),
+        widget.TextBox(
+            # text='',
+            text="",
+            foreground=colors["hint"],
+        ),
+        widget.UPowerWidget(
+            battery_name="BAT0",
+            border_charge_colour="#00FF00",
+            border_colour=colors["gray6"],
+            border_critical_colour="#FF0000",
+            percentage_low=0.15,
+            percentage_critical=0.05,
+            margin=3,
+            update_interval=10,
+            battery_width=25,
+            battery_height=13,
+            background="#000000",
+            text_discharging="({percentage:.0f}%) {tte} until empty",
+            text_displaytime=5,
+        ),
+        widget.TextBox(
+            # text='',
+            text="",
+            foreground=colors["hint"],
+        ),
+        widget.Systray(),
     ]
-        
-
 
 
 def status_bar(widgets):
-    return bar.Bar(widgets, 32, margin = [5, 5, 3, 5])
+    return bar.Bar(widgets, 32, margin=[5, 5, 3, 5])
 
 
 screens = [Screen(top=status_bar(init_widgets()))]
@@ -362,7 +389,7 @@ else:
     # Check the output of the xrandr command, if a monitor is connected
     # but turned off, then it will not show any resolution for that montior.
     xrandr_output = command.stdout.decode("UTF-8").split("\n")[:-1]
-    resolutions = map(lambda output: output.split(" ")[2], xrandr_output) 
+    resolutions = map(lambda output: output.split(" ")[2], xrandr_output)
     connected_monitors = len([r for r in resolutions if not r.startswith("(")])
 
 # if connected_monitors == 3:
@@ -415,7 +442,8 @@ wl_input_rules = None
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
 
+
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~/.config/qtile/autostart.sh')
+    home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.run([home])
