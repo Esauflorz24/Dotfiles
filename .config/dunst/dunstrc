@@ -1,6 +1,3 @@
-## Copyright (C) 2020-2022 Aditya Shakya <adi1090x@gmail.com>
-## Everyone is permitted to copy and distribute copies of this file under GNU-GPL3
-
 [global]
 monitor = 0
 follow = mouse
@@ -45,15 +42,15 @@ context = ctrl+shift+period
 
 [urgency_low]
 timeout = 2
-background = "#282C33"
+background = "#101010"
 foreground = "#D8D8D8"
-frame_color = "#30343B"
+frame_color = "#dddddd"
 
 [urgency_normal]
 timeout = 5
-background = "#282C33"
+background = "#101010"
 foreground = "#D8D8D8"
-frame_color = "#30343B"
+frame_color = "#101010"
 
 [urgency_critical]
 timeout = 0
