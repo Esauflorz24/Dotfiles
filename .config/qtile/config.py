@@ -72,8 +72,8 @@ keys = [
         ([mod], "r", lazy.spawn("redshift -O 2400")),
         ([mod, "shift"], "r", lazy.spawn("redshift -x")),
         # Screenshot
-        ([mod], "s", lazy.spawn("scrot")),
-        ([mod, "shift"], "s", lazy.spawn("scrot -s")),
+        ([mod], "s", lazy.spawn("flameshot full -p /home/esz/Imágenes/Capturas")),
+        ([mod, "shift"], "s", lazy.spawn("flameshot gui -p /home/esz/Imágenes/Capturas")),
         # ------------ Hardware Configs ------------
         # Volume
         (
