@@ -2,7 +2,7 @@
 
 palette = "catppuccin_mocha"
 
-format="$os$directory $git_branch $character"
+format = "$os$directory $git_branch $c $character"
 
 [character]
 success_symbol = "[󰁔](subtext1)"
@@ -30,6 +30,12 @@ disabled = false
 
 [os.symbols]
 Arch = " "
+
+[c]
+format = 'via [$symbol($version(-$name) )]($style)'
+symbol = " "
+version_format = 'v${raw}'
+detect_extensions = ['c', 'h']
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
