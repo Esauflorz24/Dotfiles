@@ -6,12 +6,8 @@ return {
 
 		conform.setup({
 			formatters_by_ft = {
-				javascript = { "prettier", "prettierd" },
-				typescript = { "prettier", "prettierd" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
-				html = { "prettier" },
-				json = { "prettier" },
 				sh = { "shfmt", "beautysh" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },

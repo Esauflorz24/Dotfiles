@@ -28,7 +28,6 @@ return {
 				"clangd",
 				"pyright",
 				"bashls",
-				"tsserver",
 			},
 			automatic_installation = true,
 		})
@@ -46,9 +45,6 @@ return {
 				{ "black" },
 				{ "autopep8" },
 				{ "json-lsp" },
-				{ "prettier" },
-				{ "typescript-language-server" },
-				{ "js-debug-adapter" },
 				{ "eslint_d" },
 				{ "eslint-lsp" },
 				{ "codelldb" },

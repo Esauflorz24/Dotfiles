@@ -62,25 +62,19 @@ return {
 			},
 		})
 
-		lspconfig.tsserver.setup({
-			capabilities = capabilities,
-			init_options = {
-				preferences = {
-					disableSuggestions = true,
-				},
-			},
-			filetypes = {
-				"javascript",
-				"javascriptreact",
-				"javascript.jsx",
-				"typescript",
-				"typescriptreact",
-				"typescript.tsx",
-			},
-		})
-
 		lspconfig.bashls.setup({
 			capabilities = capabilities,
+			cmd = { "bash-language-server", "start" },
+			filetypes = { "sh", "bash" },
+			settings = {
+				bashIde = {
+					shellcheckExecutable = vim.fn.exepath("shellcheck"),
+					shellcheckArguments = { "--external-sources" },
+					formatting = {
+						executablePath = vim.fn.exepath("shfmt"),
+					},
+				},
+			},
 		})
 	end,
 }
