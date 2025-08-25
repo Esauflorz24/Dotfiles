@@ -201,7 +201,7 @@ layouts = [
 
 widget_defaults = dict(
     font="FiraCode Nerd Font Bold",
-    fontsize=14,
+    fontsize=13,
     padding=5,
     foreground=colors["white"],
     background=colors["black"],
@@ -291,7 +291,7 @@ def init_widgets():
         ),
         widget.Net(
             format="  {total:.0f} {total_suffix}",
-            interface="wlan0",
+            interface="enp4s0",
         ),
         # widget.TextBox(
         #    text='',
@@ -342,26 +342,26 @@ def init_widgets():
             text="",
             foreground=colors["hint"],
         ),
-        widget.UPowerWidget(
-            battery_name="BAT0",
-            border_charge_colour="#00FF00",
-            border_colour=colors["gray6"],
-            border_critical_colour="#FF0000",
-            percentage_low=0.15,
-            percentage_critical=0.05,
-            margin=3,
-            update_interval=10,
-            battery_width=25,
-            battery_height=13,
-            background="#000000",
-            text_discharging="({percentage:.0f}%) {tte} until empty",
-            text_displaytime=5,
-        ),
-        widget.TextBox(
-            # text='',
-            text="",
-            foreground=colors["hint"],
-        ),
+        #widget.UPowerWidget(
+        #    battery_name="BAT0",
+        #    border_charge_colour="#00FF00",
+        #    border_colour=colors["gray6"],
+        #    border_critical_colour="#FF0000",
+        #    percentage_low=0.15,
+        #    percentage_critical=0.05,
+        #    margin=3,
+        #    update_interval=10,
+        #    battery_width=25,
+        #    battery_height=13,
+        #    background="#000000",
+        #    text_discharging="({percentage:.0f}%) {tte} until empty",
+        #    text_displaytime=5,
+       # ),
+       # widget.TextBox(
+       #     # text='',
+       #     text="",
+       #     foreground=colors["hint"],
+       # ),
         widget.Systray(),
     ]
 

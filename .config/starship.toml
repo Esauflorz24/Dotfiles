@@ -2,7 +2,7 @@
 
 palette = "catppuccin_mocha"
 
-format = "$os$directory $git_branch $c $character"
+format = "$os$directory $git_branch $c$character"
 
 [character]
 success_symbol = "[󰁔](subtext1)"
@@ -29,10 +29,11 @@ style = "italic text"
 disabled = false
 
 [os.symbols]
+EndeavourOS = " "
 Arch = " "
 
 [c]
-format = 'via [$symbol($version(-$name) )]($style)'
+format = 'via [$symbol($version(-$name) )]($style) '
 symbol = " "
 version_format = 'v${raw}'
 detect_extensions = ['c', 'h']
