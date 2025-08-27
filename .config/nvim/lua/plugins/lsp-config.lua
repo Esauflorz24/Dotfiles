@@ -42,6 +42,7 @@ return {
 
 		vim.lsp.enable("jdtls")
 		vim.lsp.config("jdtls", {
+			capabilities = capabilities,
 			cmd = { "jdtls" },
 			filetypes = { "java", "jsp" },
 		})
