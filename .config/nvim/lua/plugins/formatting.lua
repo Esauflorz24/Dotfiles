@@ -11,6 +11,7 @@ return {
 				sh = { "shfmt", "beautysh" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
+				java = { "astyle" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
