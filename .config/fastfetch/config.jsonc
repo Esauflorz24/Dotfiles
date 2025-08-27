@@ -1,86 +1,86 @@
 {
-  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-  "logo": {
-    "color": {
-      "1": "#dddddd",
-      "2" : "#7a7a7a"
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "color": {
+            "1": "#dddddd",
+            "2": "#7a7a7a"
+        },
+        "type": "file"
     },
-    "type": "file",
-  },
-  "display": {
-    "separator": "    "
-  },
-  "modules": [
-    {
-      "type": "custom",
-      "format": "┌───────── Software Information ─────────┐"
+    "display": {
+        "separator": "    "
     },
-    "break",
-    {
-      "type": "os",
-      "key": "  ",
-      "keyColor": "white"
-    },
-    {
-      "type": "kernel",
-      "key": "  ",
-      "keyColor": "white"
-    },
-    {
-      "type": "packages",
-      "key": "  󰮯",
-      "keyColor": "white"
-    },
-    {
-      "type": "wm",
-      "key": "  󰨇",
-      "keyColor": "white"
-    },
-    {
-      "type": "terminal",
-      "key": "  ",
-      "keyColor": "white"
-    },
-    {
-      "type": "shell",
-      "key": "  ",
-      "keyColor": "white"
-    },
-    "break",
-    {
-      "type": "custom",
-      "format": "├───────── Hardware Information ─────────┤"
-    },
-    "break",
-    {
-      "type": "host",
-      "key": "  ",
-      "keyColor": "white"
-    },
-    {
-      "type": "cpu",
-      "key": "  ",
-      "keyColor": "white"
-    },
-    {
-      "type": "gpu",
-      "key": "  󱤓",
-      "keyColor": "white"
-    },
-    {
-      "type": "memory",
-      "key": "  󰍛",
-      "keyColor": "white"
-    },
-    {
-      "type": "disk",
-      "key": "  ",
-      "keyColor": "white"
-    },
-    "break",
-    {
-      "type": "custom",
-      "format": "└───────────────────────────────────────┘"
-    }
-  ]
+    "modules": [
+        {
+            "type": "custom",
+            "format": "┌───────── Software Information ─────────┐"
+        },
+        "break",
+        {
+            "type": "os",
+            "key": "  ",
+            "keyColor": "white"
+        },
+        {
+            "type": "kernel",
+            "key": "  ",
+            "keyColor": "white"
+        },
+        {
+            "type": "packages",
+            "key": "  󰮯",
+            "keyColor": "white"
+        },
+        {
+            "type": "wm",
+            "key": "  󰨇",
+            "keyColor": "white"
+        },
+        {
+            "type": "terminal",
+            "key": "  ",
+            "keyColor": "white"
+        },
+        {
+            "type": "shell",
+            "key": "  ",
+            "keyColor": "white"
+        },
+        "break",
+        {
+            "type": "custom",
+            "format": "├───────── Hardware Information ─────────┤"
+        },
+        "break",
+        {
+            "type": "host",
+            "key": "  ",
+            "keyColor": "white"
+        },
+        {
+            "type": "cpu",
+            "key": "  ",
+            "keyColor": "white"
+        },
+        {
+            "type": "gpu",
+            "key": "  󱤓",
+            "keyColor": "white"
+        },
+        {
+            "type": "memory",
+            "key": "  󰍛",
+            "keyColor": "white"
+        },
+        {
+            "type": "disk",
+            "key": "  ",
+            "keyColor": "white"
+        },
+        "break",
+        {
+            "type": "custom",
+            "format": "└───────────────────────────────────────┘"
+        }
+    ]
 }
