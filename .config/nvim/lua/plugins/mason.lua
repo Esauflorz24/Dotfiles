@@ -28,6 +28,7 @@ return {
 				"clangd",
 				"pyright",
 				"bashls",
+				"jdtls",
 			},
 			automatic_installation = true,
 		})
@@ -46,6 +47,7 @@ return {
 				{ "codelldb" },
 				{ "clangd" },
 				{ "clang-format" },
+				{ "jdtls" },
 			},
 
 			auto_update = true,

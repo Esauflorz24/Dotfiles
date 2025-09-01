@@ -39,6 +39,10 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable("jdtls")
+		vim.lsp.config("jdtls", {
+			capabilities = capabilities,
+		})
 		lspconfig.clangd.setup({
 			capabilities = capabilities,
 			cmd = {

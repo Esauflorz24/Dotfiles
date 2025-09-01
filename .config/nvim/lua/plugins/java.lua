@@ -1,77 +1,40 @@
 return {
 	{
-		"nvim-java/nvim-java",
-		dependencies = {
-			"nvim-java/lua-async-await",
-			"nvim-java/nvim-java-core",
-			"nvim-java/nvim-java-test",
-			"nvim-java/nvim-java-dap",
-			"nvim-java/nvim-java-refactor",
-			"nvim-java/nvim-java-debug",
-			"nvim-java/nvim-java-workspace",
-			"nvim-java/nvim-java-runner",
-			"nvim-java/nvim-java-spring",
-			"nvim-lua/plenary.nvim",
-			"neovim/nvim-lspconfig",
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-		},
+		"mfussenegger/nvim-jdtls",
+		ft = { "java" },
 		config = function()
-			require("java").setup({
-				root_markers = {
-					"settings.gradle",
-					"settings.gradle.kts",
-					"pom.xml",
-					"build.gradle",
-					"mvnw",
-					"gradlew",
-					"build.gradle.kts",
-					".git",
+			local jdtls = require("jdtls")
+
+			local home = os.getenv("HOME")
+			local workspace_dir = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+
+			local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
+
+			local config = {
+				cmd = {
+					"java",
+					"-Declipse.application=org.eclipse.jdt.ls.core.id1",
+					"-Dosgi.bundles.defaultStartLevel=4",
+					"-Declipse.product=org.eclipse.jdt.ls.core.product",
+					"-Dlog.protocol=true",
+					"-Dlog.level=ALL",
+					"-Xms1g",
+					"--add-modules=ALL-SYSTEM",
+					"--add-opens",
+					"java.base/java.util=ALL-UNNAMED",
+					"--add-opens",
+					"java.base/java.lang=ALL-UNNAMED",
+					"-jar",
+					jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar",
+					"-configuration",
+					jdtls_path .. "/config_linux",
+					"-data",
+					workspace_dir,
 				},
+				root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
+			}
 
-				jdtls = { version = "v1.43.0" },
-				lombok = { version = "nightly" },
-
-				java_test = {
-					enable = true,
-					version = "0.40.1",
-				},
-
-				java_debug_adapter = {
-					enable = true,
-					version = "0.58.1",
-				},
-
-				spring_boot_tools = {
-					enable = true,
-					version = "1.55.1",
-				},
-
-				jdk = {
-					auto_install = true,
-					version = "17.0.2",
-				},
-
-				notifications = {
-					dap = true,
-				},
-
-				verification = {
-					invalid_order = true,
-					duplicate_setup_calls = true,
-					invalid_mason_registry = false,
-				},
-
-				mason = {
-					registries = {
-						"github:nvim-java/mason-registry",
-					},
-				},
-			})
-
-			require("lspconfig").jdtls.setup({
-				capabilites = require("cmp_nvim_lsp").default_capabilities(),
-			})
+			jdtls.start_or_attach(config)
 		end,
 	},
 }
