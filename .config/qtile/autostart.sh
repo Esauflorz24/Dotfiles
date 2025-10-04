@@ -7,4 +7,6 @@ nm-applet &
 volumeicon &
 
 
+# usb
+udiskie &
 
