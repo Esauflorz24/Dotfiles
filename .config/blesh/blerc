@@ -3,7 +3,8 @@
 bleopt default_keymap=vi
 bleopt exec_errexit_mark=
 bleopt keymap_vi_mode_show:=
-ble-face auto_complete='fg=240,underline,italic'
+ble-face auto_complete='fg=241,italic'
+ble-face command_builtin='fg=251'
 source /usr/share/bash-completion/bash_completion 
 
 ble-import -d integration/fzf-completion
