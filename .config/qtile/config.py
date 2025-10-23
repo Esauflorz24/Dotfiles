@@ -73,7 +73,11 @@ keys = [
         ([mod, "shift"], "r", lazy.spawn("redshift -x")),
         # Screenshot
         ([mod], "s", lazy.spawn("flameshot full -p /home/esz/Imágenes/Capturas")),
-        ([mod, "shift"], "s", lazy.spawn("flameshot gui -p /home/esz/Imágenes/Capturas")),
+        (
+            [mod, "shift"],
+            "s",
+            lazy.spawn("flameshot gui -p /home/esz/Imágenes/Capturas"),
+        ),
         # ------------ Hardware Configs ------------
         # Volume
         (
@@ -342,7 +346,7 @@ def init_widgets():
             text="",
             foreground=colors["hint"],
         ),
-        #widget.UPowerWidget(
+        # widget.UPowerWidget(
         #    battery_name="BAT0",
         #    border_charge_colour="#00FF00",
         #    border_colour=colors["gray6"],
@@ -356,12 +360,12 @@ def init_widgets():
         #    background="#000000",
         #    text_discharging="({percentage:.0f}%) {tte} until empty",
         #    text_displaytime=5,
-       # ),
-       # widget.TextBox(
-       #     # text='',
-       #     text="",
-       #     foreground=colors["hint"],
-       # ),
+        # ),
+        # widget.TextBox(
+        #     # text='',
+        #     text="",
+        #     foreground=colors["hint"],
+        # ),
         widget.Systray(),
     ]
 
