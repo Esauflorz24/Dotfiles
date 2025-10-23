@@ -39,6 +39,11 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable("stylua")
+		vim.lsp.config("stylua", {
+			capabilities = capabilities,
+		})
+
 		vim.lsp.enable("jdtls")
 		vim.lsp.config("jdtls", {
 			capabilities = capabilities,
