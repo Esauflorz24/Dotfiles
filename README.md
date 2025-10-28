@@ -13,3 +13,4 @@
 - network-manager-applet
 - gnome-keyring
 - volumeicon 
+- ble.sh
