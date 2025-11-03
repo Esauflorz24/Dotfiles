@@ -13,4 +13,5 @@
 - network-manager-applet
 - gnome-keyring
 - volumeicon 
+- nwg-look
 - ble.sh
