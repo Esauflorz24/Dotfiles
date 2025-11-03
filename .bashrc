@@ -30,8 +30,8 @@ PS1='[\u@\h \W]\$ '
 export EDITOR=nvim
 
 
-#source /home/esz/.local/share/blesh/ble.sh --noattach --rcfile ~/.config/blesh/blerc
+source /home/esz/.local/share/blesh/ble.sh --noattach --rcfile ~/.config/blesh/blerc
 
 
 
-#[[ ! ${BLE_VERSION-} ]] || ble-attach
+[[ ! ${BLE_VERSION-} ]] || ble-attach
