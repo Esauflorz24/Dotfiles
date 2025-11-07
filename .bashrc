@@ -31,6 +31,7 @@ export EDITOR=nvim
 
 
 source /home/esz/.local/share/blesh/ble.sh --noattach --rcfile ~/.config/blesh/blerc
+source /usr/share/nvm/init-nvm.sh
 
 
 

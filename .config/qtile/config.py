@@ -295,7 +295,7 @@ def init_widgets():
         ),
         widget.Net(
             format="  {total:.0f} {total_suffix}",
-            interface="enp4s0",
+            interface="enp5s0",
         ),
         # widget.TextBox(
         #    text='',
