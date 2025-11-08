@@ -4,7 +4,6 @@ return {
 	lazy = false,
 	config = function()
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
-		local lspconfig = require("lspconfig")
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -48,7 +47,8 @@ return {
 		vim.lsp.config("jdtls", {
 			capabilities = capabilities,
 		})
-		lspconfig.clangd.setup({
+		vim.lsp.enable("clangd")
+		vim.lsp.config("clangd", {
 			capabilities = capabilities,
 			cmd = {
 				"clangd",
@@ -56,11 +56,13 @@ return {
 			},
 		})
 
-		lspconfig.pyright.setup({
+		vim.lsp.enable("pyright")
+		vim.lsp.config("pyright", {
 			capabilities = capabilities,
 		})
 
-		lspconfig.lua_ls.setup({
+		vim.lsp.enable("lua_ls")
+		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			settings = {
 				Lua = {
@@ -71,7 +73,8 @@ return {
 			},
 		})
 
-		lspconfig.bashls.setup({
+		vim.lsp.enable("bashls")
+		vim.lsp.config("bashls", {
 			capabilities = capabilities,
 			cmd = { "bash-language-server", "start" },
 			filetypes = { "sh", "bash" },
@@ -85,5 +88,44 @@ return {
 				},
 			},
 		})
+
+		--		lspconfig.clangd.setup({
+		--			capabilities = capabilities,
+		--			cmd = {
+		--				"clangd",
+		--				"--offset-encoding=utf-16",
+		--			},
+		--		})
+
+		--		lspconfig.pyright.setup({
+		--			capabilities = capabilities,
+		--
+		--		})
+
+		--		lspconfig.lua_ls.setup({
+		--			capabilities = capabilities,
+		--			settings = {
+		--				Lua = {
+		--					diagnostics = {
+		--						globals = { "vim" },
+		--					},
+		--				},
+		--			},
+		--		})
+
+		--		lspconfig.bashls.setup({
+		--			capabilities = capabilities,
+		--			cmd = { "bash-language-server", "start" },
+		--			filetypes = { "sh", "bash" },
+		--			settings = {
+		--				bashIde = {
+		--					shellcheckExecutable = vim.fn.exepath("shellcheck"),
+		--					shellcheckArguments = { "--external-sources" },
+		--					formatting = {
+		--						executablePath = vim.fn.exepath("shfmt"),
+		--					},
+		--				},
+		--			},
+		--		})
 	end,
 }
