@@ -36,3 +36,5 @@ source /usr/share/nvm/init-nvm.sh
 
 
 [[ ! ${BLE_VERSION-} ]] || ble-attach
+
+. "$HOME/.local/bin/env"

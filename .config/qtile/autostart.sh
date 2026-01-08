@@ -3,10 +3,6 @@
 # nm-applet
 nm-applet &
 
-# volume icon
-volumeicon &
-
-
-# usb
-udiskie &
-
+xset s off
+xset -dpms
+xset s noblank
