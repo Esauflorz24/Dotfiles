@@ -98,16 +98,15 @@ keys = [
 ]
 
 groups = [
-    Group("1", label="一", layout="max"),
+    Group("1", label="あ ", layout="max"),
     Group(
         "2",
-        label="二",
+        label="き",
         layout="max",
-        matches=[Match(wm_class=["firefox", "librewolf"])],
     ),
-    Group("3", label="三", layout="max"),
-    Group("4", label="五", layout="max"),
-    Group("5", label="六", layout="max"),
+    Group("3", label="い ", layout="max"),
+    Group("4", label="う", layout="max"),
+    Group("5", label="え ", layout="max"),
     # Group('6', label="七", layout="max"),
     # Group('7', label="八", layout="max"),
     # Group('8', label="九", layout="max"),
@@ -215,7 +214,7 @@ extension_defaults = widget_defaults.copy()
 
 def init_widgets():
     return [
-        widget.CurrentLayoutIcon(foreground="#33d17a", scale=0.65),
+        widget.CurrentLayoutIcon(scale=0.65),
         widget.CurrentLayout(
             foreground=colors["white"],
             padding=6.5,
@@ -226,10 +225,15 @@ def init_widgets():
             foreground=colors["hint"],
         ),
         widget.Clock(
-            format="%A - %H:%M",
+            format=" %A, %B %#d, %Y -  %H:%M",
             background=colors["black"],
             foreground=colors["white"],
             padding=7,
+        ),
+        widget.TextBox(
+            text="",
+            # text="",
+            foreground=colors["hint"],
         ),
         widget.Spacer(
             length=bar.STRETCH
@@ -269,12 +273,12 @@ def init_widgets():
         widget.CheckUpdates(
             distro="Arch_checkupdates",
             update_interval=5,
-            display_format=" {updates} ",
+            display_format=" {updates}",
             foreground=colors["white"],
             background=colors["black"],
             colour_have_updates=colors["white"],
             colour_no_updates=colors["white"],
-            no_update_string="No Updates",
+            no_update_string=" ",
         ),
         # widget.TextBox(
         #    text="",
@@ -289,6 +293,11 @@ def init_widgets():
         #    foreground = colors["red"],
         #    ),
         # widget.Sep(),
+        widget.TextBox(
+            text="",
+            foreground=colors["hint"],
+        ),
+        widget.Volume(unmute_format=" {volume}%", mute_format=" "),
         widget.TextBox(
             text="",
             foreground=colors["hint"],
@@ -427,7 +436,7 @@ floating_layout = layout.Floating(
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
-reconfigure_screens = True
+reconfigure_screens = False
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
@@ -451,3 +460,9 @@ wmname = "LG3D"
 def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.run([home])
+
+
+@hook.subscribe.resume
+def repair_screens():
+    # Esto fuerza a Xrandr a re-detectar la salida sin cambiar la resolución
+    subprocess.run(["xrandr", "--auto"])
