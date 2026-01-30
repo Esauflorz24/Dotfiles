@@ -14,13 +14,16 @@ from libqtile.config import (
     DropDown,
     KeyChord,
 )
-from libqtile.lazy import lazy
-from typing import List  # noqa: F401
+from libqtile.lazy import LazyCall, lazy
+from typing import List
+
+from libqtile.widget.base import _TextBox  # noqa: F401
 
 # from themes.tokyonight import colors
 from themes.monochrome import colors
 from qtile_extras import widget
 
+from qtile_extras.widget.decorations import RectDecoration
 
 from libqtile.log_utils import logger
 
@@ -51,12 +54,11 @@ keys = [
         # Kill window
         ([mod], "w", lazy.window.kill()),
         # Switch focus of monitors
-        ([mod], "period", lazy.next_screen()),
-        ([mod], "comma", lazy.prev_screen()),
+        ([mod], "period", lazy.screen.next_group()),
+        ([mod], "comma", lazy.screen.prev_group()),
         # Restart Qtile
         ([mod, "control"], "r", lazy.restart()),
         ([mod, "control"], "q", lazy.shutdown()),
-        ([mod], "r", lazy.spawncmd()),
         # ------------ App Configs ------------
         # Menu
         ([mod], "m", lazy.spawn("rofi -show drun")),
@@ -98,15 +100,16 @@ keys = [
 ]
 
 groups = [
-    Group("1", label="あ ", layout="max"),
+    Group("1", label="あ", layout="max"),
     Group(
         "2",
         label="き",
         layout="max",
+        matches=[Match(wm_class=re.compile(r"^(firefox|librewolf)$"))],
     ),
-    Group("3", label="い ", layout="max"),
+    Group("3", label="い", layout="max"),
     Group("4", label="う", layout="max"),
-    Group("5", label="え ", layout="max"),
+    Group("5", label="え", layout="max"),
     # Group('6', label="七", layout="max"),
     # Group('7', label="八", layout="max"),
     # Group('8', label="九", layout="max"),
@@ -132,58 +135,14 @@ for i in groups:
         ]
     )
 
-groups.append(
-    ScratchPad(
-        "6",
-        [
-            DropDown(
-                "chatgpt",
-                "chromium --app=https://chat.openai.com",
-                x=0.3,
-                y=0.1,
-                width=0.40,
-                height=0.4,
-                on_focus_lost_hide=False,
-            ),
-            DropDown(
-                "mousepad",
-                "mousepad",
-                x=0.3,
-                y=0.1,
-                width=0.40,
-                height=0.4,
-                on_focus_lost_hide=False,
-            ),
-            DropDown(
-                "terminal",
-                "alacritty",
-                x=0.3,
-                y=0.1,
-                width=0.40,
-                height=0.4,
-                on_focus_lost_hide=False,
-            ),
-            DropDown(
-                "scrcpy",
-                "scrcpy -d",
-                x=0.8,
-                y=0.05,
-                width=0.15,
-                height=0.6,
-                on_focus_lost_hide=False,
-            ),
-        ],
-    )
-)
-
 
 colors = colors["hack"]
 
 layout_theme = {
     "border_width": 2,
-    "margin": 4,
+    "margin": 5,
     "border_focus": colors["white"],
-    "border_normal": colors["black"],
+    "border_normal": colors["gray5"],
 }
 
 layouts = [
@@ -203,126 +162,122 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="FiraCode Nerd Font Bold",
-    fontsize=13,
-    padding=5,
+    font="FiraCode Nerd Font ",
+    fontsize=16,
     foreground=colors["white"],
     background=colors["black"],
 )
 extension_defaults = widget_defaults.copy()
 
+decor = {
+    "decorations": [
+        RectDecoration(
+            colour=colors["gray2"],
+            radius=6.5,
+            filled=True,
+            padding_y=5,
+            padding_x=5,
+            group=False,
+        )
+    ],
+    "padding": 17,
+}
+
 
 def init_widgets():
     return [
-        widget.CurrentLayoutIcon(scale=0.65),
         widget.CurrentLayout(
-            foreground=colors["white"],
-            padding=6.5,
-        ),
-        widget.TextBox(
-            text="",
-            # text="",
-            foreground=colors["hint"],
+            foreground=colors["white"], mode="both", icon_first=True, scale=0.6, **decor
         ),
         widget.Clock(
-            format=" %A, %B %#d, %Y -  %H:%M",
-            background=colors["black"],
+            format=" %a %b %d, %Y -  %H:%M",
             foreground=colors["white"],
-            padding=7,
+            mouse_callbacks={
+                "Button1": lazy.spawn("gsimplecal"),
+                "Button3": lazy.spawn("killall -q gsimplecal"),
+            },
+            **decor,
         ),
-        widget.TextBox(
-            text="",
-            # text="",
-            foreground=colors["hint"],
-        ),
-        widget.Spacer(
-            length=bar.STRETCH
-            # background = "#0080FF00"
-        ),
+        widget.Spacer(length=bar.STRETCH),
         widget.GroupBox(
-            highlight_method="text",
-            active=colors["gray5"],  # not current active font color
-            inactive=colors["gray7"],
-            rounded=False,
+            padding=5,
+            highlight_method="block",
+            active=colors["gray6"],
+            inactive=colors["white"],
+            rounded=True,
             disable_drag=True,
             highlight_color=colors["red"],
-            this_current_screen_border=colors[
-                "white"
-            ],  # current active font color - MAIN
+            this_current_screen_border=colors["gray2"],
             this_screen_border=colors["gray1"],
             other_current_screen_border=colors["black"],
             other_screen_border=colors["black"],
             urgent_border=colors["red"],
             urgent_text=colors["red"],
-            # foreground = colors["fg"],
-            # background = colors["red"],
             # hide_unused=True,
         ),
-        widget.Spacer(
-            length=bar.STRETCH
-            # background = "#0080FF00"
-        ),
-        # widget.Chord(
-        #     chords_colors={
-        #         "launch": ("#ff0000", "#ffffff"),
-        #     },
-        #     name_transform=lambda name: name.upper(),
-        # ),
-        # widget.TextBox("this is not default       ", name="default"),
-        # widget.Sep(),
+        widget.Spacer(length=bar.STRETCH),
+        widget.StatusNotifier(**decor),
         widget.CheckUpdates(
             distro="Arch_checkupdates",
             update_interval=5,
-            display_format=" {updates}",
+            display_format=" {updates}",
             foreground=colors["white"],
             background=colors["black"],
             colour_have_updates=colors["white"],
             colour_no_updates=colors["white"],
-            no_update_string=" ",
+            no_update_string="  no updates",
+            **decor,
         ),
-        # widget.TextBox(
-        #    text="",
-        #    foreground = colors["red"],
-        #    ),
-        # widget.Wttr(
-        #     location={'El Salvador': 'home'},
-        #     format = '%C, %t'
-        #     ),
-        # #widget.TextBox(
-        #    text='',
-        #    foreground = colors["red"],
-        #    ),
-        # widget.Sep(),
-        widget.TextBox(
-            text="",
-            foreground=colors["hint"],
-        ),
-        widget.Volume(unmute_format=" {volume}%", mute_format=" "),
-        widget.TextBox(
-            text="",
-            foreground=colors["hint"],
+        widget.Volume(
+            unmute_format=" {volume}%",
+            mute_format="  muted",
+            mouse_callbacks={
+                "Button3": lazy.spawn("pavucontrol"),
+                "Button2": lazy.spawn("pkill -f 'pavucontrol'"),
+            },
+            **decor,
         ),
         widget.Net(
-            format="  {total:.0f} {total_suffix}",
+            format="󰈀 {total:.0f} {total_suffix}",
             interface="enp5s0",
-        ),
-        # widget.TextBox(
-        #    text='',
-        #    foreground = colors["red"],
-        #    ),
-        # widget.Sep(),
-        widget.TextBox(
-            text="",
-            foreground=colors["hint"],
+            mouse_callbacks={
+                "Button1": lazy.spawn("kitty -e nmtui"),
+                "Button3": lazy.spawn("pkill -f 'kitty -e nmtui'"),
+            },
+            **decor,
         ),
         widget.Memory(
             format=" {MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
             measure_mem="G",
+            mouse_callbacks={
+                "Button1": lazy.spawn(
+                    "kitty --class floating -o remember_window_size=no -o initial_window_width=1000 -o initial_window_height=600 -e btop"
+                ),
+                "Button3": lazy.spawn(
+                    "pkill -f 'kitty --class floating -o remember_window_size=no -o initial_window_width=1000 -o initial_window_height=600 -e btop'"
+                ),
+            },
+            update_interval=1,
+            **decor,
         ),
         # widget.TextBox(
-        #    text='',
-        #    foreground = colors["red"],
-        #    ),
+        #    text="",
+        #       fontsize=16,
+        #       mouse_callbacks={
+        #           "Button1": lazy.spawn("/home/esz/.config/rofi/powermenu.sh"),
+        #           "Button3": lazy.spawn("betterlockscreen -l"),
+        #       },
+        #       **decor,
+        #   ),
+        widget.Image(
+            filename="~/.config/qtile/assets/power.png",
+            **decor,
+            margin_y=9,
+            mouse_callbacks={
+                "Button1": lazy.spawn("/home/esz/.config/rofi/powermenu.sh"),
+                "Button3": lazy.spawn("betterlockscreen -l"),
+            },
+        ),
         # widget.TextBox(
         #     text="",
         #     foreground = colors["red"],
@@ -335,11 +290,6 @@ def init_widgets():
         #     foreground_alert=colors["red"],
         #     foreground = colors["fg"],
         #     ),
-        # #widget.Sep(),
-        # widget.TextBox(
-        #    text='',
-        #    foreground = colors["red"],
-        #    ),
         # widget.Backlight(
         #     backlight_name = 'intel_backlight',
         #     format = '  {percent:2.0%}',
@@ -350,11 +300,11 @@ def init_widgets():
         #     foreground = colors["red"],
         #     ),
         # widget.Sep(),
-        widget.TextBox(
-            # text='',
-            text="",
-            foreground=colors["hint"],
-        ),
+        # widget.TextBox(
+        #     # text='',
+        #     text="",
+        #     foreground=colors["hint"],
+        # ),
         # widget.UPowerWidget(
         #    battery_name="BAT0",
         #    border_charge_colour="#00FF00",
@@ -370,17 +320,11 @@ def init_widgets():
         #    text_discharging="({percentage:.0f}%) {tte} until empty",
         #    text_displaytime=5,
         # ),
-        # widget.TextBox(
-        #     # text='',
-        #     text="",
-        #     foreground=colors["hint"],
-        # ),
-        widget.Systray(),
     ]
 
 
 def status_bar(widgets):
-    return bar.Bar(widgets, 32, margin=[5, 5, 3, 5])
+    return bar.Bar(widgets, 36, margin=[5, 5, 1, 5])
 
 
 screens = [Screen(top=status_bar(init_widgets()))]
@@ -432,7 +376,10 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
-    ]
+        Match(wm_class="floating"),
+    ],
+    border_focus=colors["white"],
+    border_width=2,
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
@@ -460,9 +407,3 @@ wmname = "LG3D"
 def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.run([home])
-
-
-@hook.subscribe.resume
-def repair_screens():
-    # Esto fuerza a Xrandr a re-detectar la salida sin cambiar la resolución
-    subprocess.run(["xrandr", "--auto"])
