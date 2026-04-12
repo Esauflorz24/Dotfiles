@@ -22,4 +22,3 @@ colors = {
         "amber": ["#FFD65C"],
     }
 }
-

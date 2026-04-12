@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# nm-applet
-nm-applet &
 
 xset s off
 xset -dpms

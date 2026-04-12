@@ -2,30 +2,18 @@ import os
 import re
 import socket
 import subprocess
-from libqtile import bar, layout, hook, extension, qtile
-from libqtile.config import (
-    Click,
-    Drag,
-    Group,
-    Key,
-    Match,
-    Screen,
-    ScratchPad,
-    DropDown,
-    KeyChord,
-)
-from libqtile.lazy import LazyCall, lazy
 from typing import List
 
+from libqtile import bar, extension, hook, layout, qtile
+from libqtile.config import Group, Key, Match, Screen
+from libqtile.lazy import LazyCall, lazy
+from libqtile.log_utils import logger
 from libqtile.widget.base import _TextBox  # noqa: F401
+from qtile_extras import widget
+from qtile_extras.widget.decorations import RectDecoration
 
 # from themes.tokyonight import colors
 from themes.monochrome import colors
-from qtile_extras import widget
-
-from qtile_extras.widget.decorations import RectDecoration
-
-from libqtile.log_utils import logger
 
 mod = "mod4"
 terminal = "kitty"
@@ -60,6 +48,8 @@ keys = [
         ([mod, "control"], "r", lazy.restart()),
         ([mod, "control"], "q", lazy.shutdown()),
         # ------------ App Configs ------------
+        # Lock Screen
+        ([mod], "x", lazy.spawn("betterlockscreen -l")),
         # Menu
         ([mod], "m", lazy.spawn("rofi -show drun")),
         # Window Nav
@@ -275,7 +265,7 @@ def init_widgets():
             margin_y=9,
             mouse_callbacks={
                 "Button1": lazy.spawn("/home/esz/.config/rofi/powermenu.sh"),
-                "Button3": lazy.spawn("betterlockscreen -l"),
+                "Button3": lazy.spawn("rofi -show drun"),
             },
         ),
         # widget.TextBox(
