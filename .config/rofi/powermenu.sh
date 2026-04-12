@@ -14,9 +14,9 @@ dir="$HOME/.config/rofi"
 theme='theme'
 
 # CMDs
-uptime="`uptime -p | sed -e 's/up //g'`"
-host=`cat /etc/hostname`
-session="`grep "Qtile$" /usr/share/xsessions/qtile.desktop | cut -d "=" -f 2`"
+uptime="$(uptime -p | sed -e 's/up //g')"
+host=$(cat /etc/hostname)
+session="$(grep "Qtile$" /usr/share/xsessions/qtile.desktop | cut -d "=" -f 2)"
 
 # Options
 shutdown=''
@@ -50,7 +50,7 @@ confirm_exit() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$lock\n$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd
+	echo -e "$shutdown\n$reboot\n$logout\n$lock\n$suspend" | rofi_cmd
 }
 
 # Execute Command
