@@ -28,8 +28,8 @@ return {
 
 		dashboard.section.buttons.val = {
 			dashboard.button("e", "New file", "<cmd>ene <CR>"),
-			dashboard.button("SPC s f", "Find file"),
-			dashboard.button("SPC s o", "Recently opened files"),
+			dashboard.button("ff", "Find file", "<cmd>Telescope find_files<CR>"),
+			dashboard.button("fo", "Recent Files", "<cmd>Telescope oldfiles<CR>"),
 			dashboard.button("SPC s r", "Resume Telescope"),
 		}
 		_Gopts = {

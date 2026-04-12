@@ -48,6 +48,7 @@ return {
 				{ "clangd" },
 				{ "clang-format" },
 				{ "jdtls" },
+				{ "isort" },
 			},
 
 			auto_update = true,

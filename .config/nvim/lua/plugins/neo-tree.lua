@@ -25,6 +25,10 @@ return {
 					never_show = {},
 				},
 			},
+			source_selector = {
+				winbar = true,
+				statusline = false,
+			},
 		})
 		vim.keymap.set("n", "<C-n>", ":Neotree toggle<CR>", {})
 	end,
