@@ -180,7 +180,7 @@ def init_widgets():
             foreground=colors["white"], mode="both", icon_first=True, scale=0.6, **decor
         ),
         widget.Clock(
-            format=" %a %b %d, %Y -  %H:%M",
+            format=" %a %b %d, %Y - 󰥔 %H:%M",
             foreground=colors["white"],
             mouse_callbacks={
                 "Button1": lazy.spawn("gsimplecal"),
@@ -206,7 +206,10 @@ def init_widgets():
             # hide_unused=True,
         ),
         widget.Spacer(length=bar.STRETCH),
-        widget.StatusNotifier(**decor),
+        widget.Systray(),
+        widget.StatusNotifier(
+            **decor,
+        ),
         widget.CheckUpdates(
             distro="Arch_checkupdates",
             update_interval=5,
@@ -218,7 +221,7 @@ def init_widgets():
             no_update_string="  no updates",
             **decor,
         ),
-        widget.Volume(
+        widget.PulseVolume(
             unmute_format=" {volume}%",
             mute_format="  muted",
             mouse_callbacks={
@@ -227,6 +230,7 @@ def init_widgets():
             },
             **decor,
         ),
+        widget.CPU(**decor, format=" {load_percent}%"),
         widget.Net(
             format="󰈀 {total:.0f} {total_suffix}",
             interface="enp5s0",

@@ -106,8 +106,8 @@ local function mode_icon()
 	local mode = vim.fn.mode()
 
 	local modes = {
-		n = { text = " \u{e7c5}  NORMAL ", hl = "%#StModeNormal#" },
-		i = { text = " \u{f11c}  INSERT ", hl = "%#StModeInsert#" },
+		n = { text = " \u{e7c5} NORMAL ", hl = "%#StModeNormal#" },
+		i = { text = " \u{f11c} INSERT ", hl = "%#StModeInsert#" },
 		v = { text = " \u{f06e} VISUAL ", hl = "%#StModeVisual#" },
 		V = { text = " \u{f0168} V-LINE ", hl = "%#StModeVisual#" },
 		["\22"] = { text = " \u{f0168} V-BLOCK ", hl = "%#StModeVisual#" },
