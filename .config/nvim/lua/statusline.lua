@@ -70,7 +70,6 @@ local function file_type()
 	return (icons[ft] or icon_empty .. " ") .. name
 end
 
--- File size with Nerd Font icon
 local function file_size()
 	local size = vim.fn.getfsize(vim.fn.expand("%"))
 	if size < 0 then
