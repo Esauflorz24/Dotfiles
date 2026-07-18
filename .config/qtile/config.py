@@ -1,14 +1,13 @@
 import os
 import re
-import socket
 import subprocess
-from typing import List
 
-from libqtile import bar, extension, hook, layout, qtile
+import qtile_extras.hook
+from libqtile import bar, hook, layout, qtile
 from libqtile.config import Group, Key, Match, Screen
-from libqtile.lazy import LazyCall, lazy
+from libqtile.lazy import lazy
 from libqtile.log_utils import logger
-from libqtile.widget.base import _TextBox  # noqa: F401
+from libqtile.utils import send_notification
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 
@@ -18,6 +17,36 @@ from themes.monochrome import colors
 mod = "mod4"
 terminal = "kitty"
 browser = "firefox"
+
+
+@lazy.function
+def set_ip_target(qtile):
+
+    IP_REGEX = r"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+
+    try:
+        rofi_command = [
+            "rofi",
+            "-dmenu",
+            "-theme",
+            ".config/rofi/target.rasi",
+        ]
+
+        output = subprocess.check_output(rofi_command, universal_newlines=True).strip()
+
+        if not output:
+            return
+
+        if not re.match(IP_REGEX, output):
+
+            qtile.spawn(f"notify-send 'IP invalida' '{output} No es una IP'")
+            return
+
+        qtile.widgets_map["ip_target"].update(output)
+        qtile.spawn(f"notify-send 'IP guardada' 'Objetivo: {output}'")
+    except subprocess.CalledProcessError:
+        pass
+
 
 keys = [
     Key(key[0], key[1], *key[2:])
@@ -60,6 +89,8 @@ keys = [
         ([mod], "e", lazy.spawn("thunar")),
         # Terminal
         ([mod], "Return", lazy.spawn("kitty")),
+        # Ip target
+        ([mod], "p", set_ip_target),
         # Redshift
         ([mod], "r", lazy.spawn("redshift -O 2400")),
         ([mod, "shift"], "r", lazy.spawn("redshift -x")),
@@ -73,8 +104,8 @@ keys = [
         # ------------ Hardware Configs ------------
         # Volume
         (
-            [],
-            "XF86AudioLowerVolume",
+            [mod],
+            "o",
             lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"),
         ),
         (
@@ -153,41 +184,120 @@ layouts = [
 
 widget_defaults = dict(
     font="FiraCode Nerd Font ",
+    padding=5,
     fontsize=16,
     foreground=colors["white"],
     background=colors["black"],
 )
 extension_defaults = widget_defaults.copy()
 
-decor = {
+decor_powermenu = {
     "decorations": [
         RectDecoration(
-            colour=colors["gray2"],
-            radius=6.5,
+            colour=colors["gray9"],
+            radius=5,
             filled=True,
             padding_y=5,
-            padding_x=5,
+            padding_x=10,
             group=False,
         )
     ],
     "padding": 17,
 }
 
+decor_left_widget = {
+    "decorations": [
+        RectDecoration(
+            colour=colors["gray2"],
+            radius=[0, 4, 4, 0],
+            filled=True,
+            padding_y=5,
+            clip=True,
+        )
+    ],
+    "padding": 8,
+}
+decor_left_img = {
+    "decorations": [
+        RectDecoration(
+            colour=colors["gray9"],
+            radius=[4, 0, 0, 4],
+            filled=True,
+            padding_y=5,
+            clip=True,
+        )
+    ],
+    "padding": 5,
+}
+decor_right_widget = {
+    "decorations": [
+        RectDecoration(
+            colour=colors["gray2"],
+            radius=[4, 0, 0, 4],
+            filled=True,
+            padding_y=5,
+            clip=True,
+        )
+    ],
+    "padding": 8,
+}
+decor_right_img = {
+    "decorations": [
+        RectDecoration(
+            colour=colors["gray9"],
+            radius=[0, 4, 4, 0],
+            filled=True,
+            padding_y=5,
+            clip=True,
+        )
+    ],
+    "padding": 5,
+}
+
 
 def init_widgets():
     return [
+        widget.Spacer(length=10),
+        widget.CurrentLayoutIcon(
+            **decor_left_img, scale=0.51, foreground=colors["black"], use_mask=True
+        ),
         widget.CurrentLayout(
-            foreground=colors["white"], mode="both", icon_first=True, scale=0.6, **decor
+            **decor_left_widget,
+        ),
+        widget.Spacer(length=10),
+        widget.Image(
+            filename="~/.config/qtile/assets/calendar.png",
+            **decor_left_img,
+            margin_y=8,
         ),
         widget.Clock(
-            format=" %a %b %d, %Y - 󰥔 %H:%M",
+            format="%a %b %d, %Y",
             foreground=colors["white"],
             mouse_callbacks={
                 "Button1": lazy.spawn("gsimplecal"),
                 "Button3": lazy.spawn("killall -q gsimplecal"),
             },
-            **decor,
+            **decor_left_widget,
         ),
+        widget.Spacer(length=10),
+        widget.Image(
+            filename="~/.config/qtile/assets/eye.png",
+            **decor_left_img,
+            margin_y=8,
+        ),
+        widget.TextBox(**decor_left_widget, name="ip_target", text="No target"),
+        widget.Spacer(length=10),
+        widget.Image(
+            filename="~/.config/qtile/assets/clock.png",
+            **decor_left_img,
+            margin_y=8,
+        ),
+        widget.Clock(
+            format="%H:%M",
+            foreground=colors["white"],
+            **decor_left_widget,
+        ),
+        # widget.Prompt(**decor, name="prompt", cursor_type="line"),
         widget.Spacer(length=bar.STRETCH),
         widget.GroupBox(
             padding=5,
@@ -208,40 +318,72 @@ def init_widgets():
         widget.Spacer(length=bar.STRETCH),
         widget.Systray(),
         widget.StatusNotifier(
-            **decor,
+            **decor_right_widget,
         ),
         widget.CheckUpdates(
             distro="Arch_checkupdates",
             update_interval=5,
-            display_format=" {updates}",
+            display_format="{updates} Packages",
             foreground=colors["white"],
             background=colors["black"],
             colour_have_updates=colors["white"],
             colour_no_updates=colors["white"],
-            no_update_string="  no updates",
-            **decor,
+            no_update_string=" no updates",
+            **decor_right_widget,
+        ),
+        widget.Image(
+            filename="~/.config/qtile/assets/download.png",
+            **decor_right_img,
+            margin_y=8,
+        ),
+        widget.Spacer(length=10),
+        widget.PulseVolumeExtra(
+            text_format="",
+            unmute_format="",
+            mute_format="",
+            mode="bar",
+            padding=0,
+            bar_width=0,
         ),
         widget.PulseVolume(
-            unmute_format=" {volume}%",
-            mute_format="  muted",
+            unmute_format="{volume}%",
+            mute_format="muted",
             mouse_callbacks={
                 "Button3": lazy.spawn("pavucontrol"),
                 "Button2": lazy.spawn("pkill -f 'pavucontrol'"),
             },
-            **decor,
+            **decor_right_widget,
         ),
-        widget.CPU(**decor, format=" {load_percent}%"),
+        widget.Image(
+            name="volume_icon",
+            **decor_right_img,
+            margin_y=8,
+        ),
+        widget.Spacer(length=10),
+        widget.CPU(**decor_right_widget, format="{load_percent}%"),
+        widget.Image(
+            filename="~/.config/qtile/assets/cpu.png",
+            **decor_right_img,
+            margin_y=8,
+        ),
+        widget.Spacer(length=10),
         widget.Net(
-            format="󰈀 {total:.0f} {total_suffix}",
+            format="{total:.0f} {total_suffix}",
             interface="enp5s0",
             mouse_callbacks={
                 "Button1": lazy.spawn("kitty -e nmtui"),
                 "Button3": lazy.spawn("pkill -f 'kitty -e nmtui'"),
             },
-            **decor,
+            **decor_right_widget,
         ),
+        widget.Image(
+            filename="~/.config/qtile/assets/ethernet.png",
+            **decor_right_img,
+            margin_y=8,
+        ),
+        widget.Spacer(length=10),
         widget.Memory(
-            format=" {MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
+            format="{MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
             measure_mem="G",
             mouse_callbacks={
                 "Button1": lazy.spawn(
@@ -252,7 +394,12 @@ def init_widgets():
                 ),
             },
             update_interval=1,
-            **decor,
+            **decor_right_widget,
+        ),
+        widget.Image(
+            filename="~/.config/qtile/assets/ram.png",
+            **decor_right_img,
+            margin_y=8,
         ),
         # widget.TextBox(
         #    text="",
@@ -265,7 +412,7 @@ def init_widgets():
         #   ),
         widget.Image(
             filename="~/.config/qtile/assets/power.png",
-            **decor,
+            **decor_powermenu,
             margin_y=9,
             mouse_callbacks={
                 "Button1": lazy.spawn("/home/esz/.config/rofi/powermenu.sh"),
@@ -395,6 +542,34 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+
+@qtile_extras.hook.subscribe.volume_change
+@qtile_extras.hook.subscribe.volume_mute_change
+def vol_change(volume, muted):
+    base_path = "/home/esz/.config/qtile/assets"
+    icon_path = None
+
+    if not muted:
+
+        if volume < 25:
+            icon_path = f"{base_path}/volume1.png"
+        elif volume < 40:
+            icon_path = f"{base_path}/volume2.png"
+        elif volume <= 60:
+            icon_path = f"{base_path}/volume3.png"
+        else:
+            icon_path = f"{base_path}/volume3.png"
+            subprocess.run(["pactl", "set-sink-volume", "@DEFAULT_SINK@", "-30%"])
+            send_notification("Too loud", "30 levels down")
+
+    else:
+        icon_path = f"{base_path}/muted.png"
+
+    if icon_path:
+        widget = qtile.widgets_map.get("volume_icon")
+        if widget and hasattr(widget, "update"):
+            widget.update(icon_path)
 
 
 @hook.subscribe.startup_once
