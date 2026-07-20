@@ -8,7 +8,7 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				python = { "isort", "black" },
-				sh = { "shfmt", "shellcheck" },
+				sh = { "shfmt" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 			},
