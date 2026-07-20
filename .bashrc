@@ -64,8 +64,20 @@ pdfread() {
 
 }
 source /home/esz/.local/share/blesh/ble.sh --noattach --rcfile ~/.config/blesh/blerc
-source /usr/share/nvm/init-nvm.sh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [[ ! ${BLE_VERSION-} ]] || ble-attach
 
-. "$HOME/.local/bin/env"
+
+export PATH="${PATH}:/home/esz/bin"	
+
+
+# uv
+export PATH="/home/esz/.local/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
