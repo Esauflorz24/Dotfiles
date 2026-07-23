@@ -328,7 +328,7 @@ def init_widgets():
             background=colors["black"],
             colour_have_updates=colors["white"],
             colour_no_updates=colors["white"],
-            no_update_string=" no updates",
+            no_update_string="no updates",
             **decor_right_widget,
         ),
         widget.Image(
@@ -551,18 +551,12 @@ def vol_change(volume, muted):
     icon_path = None
 
     if not muted:
-
         if volume < 25:
             icon_path = f"{base_path}/volume1.png"
         elif volume < 40:
             icon_path = f"{base_path}/volume2.png"
         elif volume <= 60:
             icon_path = f"{base_path}/volume3.png"
-        else:
-            icon_path = f"{base_path}/volume3.png"
-            subprocess.run(["pactl", "set-sink-volume", "@DEFAULT_SINK@", "-30%"])
-            send_notification("Too loud", "30 levels down")
-
     else:
         icon_path = f"{base_path}/muted.png"
 
