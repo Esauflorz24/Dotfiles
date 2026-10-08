@@ -6,7 +6,7 @@ format = "$os$directory $git_branch $c$character"
 
 [character]
 success_symbol = "[󰁔](subtext1)"
-error_symbol = "[󰁔](red)"
+error_symbol = "[󰁔](amber)"
 vicmd_symbol = "[ 󰁔](bold lavender)"
 vimcmd_replace_one_symbol = '[ 󰁔](bold mauve) '
 vimcmd_replace_symbol = '[ 󰁔](bold teal) '
@@ -33,7 +33,7 @@ EndeavourOS = " "
 Arch = " "
 
 [c]
-format = 'via [$symbol($version(-$name) )]($style) '
+format = 'via [$symbol($version)](fg:overlay2) '
 symbol = " "
 version_format = 'v${raw}'
 detect_extensions = ['c', 'h']
@@ -53,11 +53,11 @@ sky = "#89dceb"
 sapphire = "#74c7ec"
 blue = "#89b4fa"
 lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
+text = "#dddddd"
+subtext1 = "#f7f7f7"
 subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
+overlay2 = "#aaaaaa"
+overlay1 = "#444444"
 overlay0 = "#6c7086"
 surface2 = "#585b70"
 surface1 = "#45475a"
@@ -65,4 +65,4 @@ surface0 = "#313244"
 base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
-amber = "#FFBF00"
+amber = "#FFD65C"
