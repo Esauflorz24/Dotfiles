@@ -15,20 +15,20 @@ configuration {
 /*****----- Global Properties -----*****/
 * {
     /* Resolution : 1920x1080 */
-    mainbox-spacing:             100px;
-    mainbox-margin:              150px 400px;
-    message-margin:              0px 350px;
-    message-padding:             15px;
-    message-border-radius:       15px;
-    listview-spacing:            50px;
-    element-padding:             40px;
-    element-border-radius:       20px;
+    mainbox-spacing:             50px;
+    mainbox-margin:              50px;
+    message-margin:              0px 300px;
+    message-padding:             12px;
+    message-border-radius:       12px;
+    listview-spacing:            25px;
+    element-padding:             35px 0px;
+    element-border-radius:       60px;
 
-    prompt-font:                 "Hack Nerd Font 72";
-    textbox-font:                "Hack Nerd Font 14";
-    element-text-font:           "Hack Nerd Font Mono 64";
+    prompt-font:                 "ProFont IIx Nerd Font Italic 48";
+    textbox-font:                "Iosevka Nerd Font 12";
+    element-text-font:           "feather 48";
 
-    background-window:           black/30%;
+    background-window:           black/20%;
     background-normal:           white/5%;
     background-selected:         white/15%;
     foreground-normal:           white;
@@ -40,7 +40,9 @@ window {
     transparency:                "real";
     location:                    center;
     anchor:                      center;
-    fullscreen:                  true;
+    fullscreen:                  false;
+    width:                       1000px;
+    border-radius:               50px;
     cursor:                      "default";
     background-color:            var(background-window);
 }
@@ -93,7 +95,7 @@ textbox {
 listview {
     enabled:                     true;
     expand:                      false;
-    columns:                     5;
+    columns:                     4;
     lines:                       1;
     cycle:                       true;
     dynamic:                     true;
@@ -112,11 +114,10 @@ listview {
 element {
     enabled:                     true;
     padding:                     var(element-padding);
-    border-radius:               var(element-border-radius);
+    border-radius:               7px;
     background-color:            var(background-normal);
     text-color:                  var(foreground-normal);
     cursor:                      pointer;
-    width:                       160px;
 }
 element-text {
     font:                        var(element-text-font);

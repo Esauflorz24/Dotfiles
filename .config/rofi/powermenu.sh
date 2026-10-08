@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
 
-## Author : Aditya Shakya (adi1090x)
-## Github : @adi1090x
-#
-## Rofi   : Power Menu
-#
-## Available Styles
-#
-## style-1   style-2   style-3   style-4   style-5
-
 # Current Theme
 dir="$HOME/.config/rofi"
 theme='theme'
@@ -16,13 +7,11 @@ theme='theme'
 # CMDs
 uptime="$(uptime -p | sed -e 's/up //g')"
 host=$(cat /etc/hostname)
-session="$(grep "Qtile$" /usr/share/xsessions/qtile.desktop | cut -d "=" -f 2)"
 
 # Options
 shutdown=''
 reboot=''
 lock=''
-suspend=''
 logout='󰗽'
 yes=''
 no=''
@@ -50,7 +39,7 @@ confirm_exit() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-    echo -e "$shutdown\n$reboot\n$logout\n$lock\n$suspend" | rofi_cmd
+    echo -e "$shutdown\n$reboot\n$logout\n$lock" | rofi_cmd
 }
 
 # Execute Command
@@ -66,18 +55,7 @@ run_cmd() {
             amixer set Master mute
             systemctl suspend
         elif [[ $1 == '--logout' ]]; then
-            if [[ $session == 'Qtile' ]]; then
-                qtile cmd-obj -o cmd -f shutdown
-            fi
-            if [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
-                openbox --exit
-            elif [[ "$DESKTOP_SESSION" == 'bspwm' ]]; then
-                bspc quit
-            elif [[ "$DESKTOP_SESSION" == 'i3' ]]; then
-                i3-msg exit
-            elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
-                qdbus org.kde.ksmserver /KSMServer logout 0 0 0
-            fi
+            /home/"${USER}"/.local/bin/qtile cmd-obj -o cmd -f shutdown
         fi
     else
         exit 0
@@ -87,23 +65,23 @@ run_cmd() {
 # Actions
 chosen="$(run_rofi)"
 case ${chosen} in
-$shutdown)
+"$shutdown")
     run_cmd --shutdown
     ;;
-$reboot)
+"$reboot")
     run_cmd --reboot
     ;;
-$lock)
+"$lock")
     if [[ -x '/usr/bin/betterlockscreen' ]]; then
         betterlockscreen -l
     elif [[ -x '/usr/bin/i3lock' ]]; then
         i3lock
     fi
     ;;
-$suspend)
+"$suspend")
     run_cmd --suspend
     ;;
-$logout)
+"$logout")
     run_cmd --logout
     ;;
 esac

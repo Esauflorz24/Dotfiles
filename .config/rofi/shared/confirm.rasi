@@ -22,7 +22,7 @@ window {
     anchor:                      center;
     fullscreen:                  false;
     width:                       500px;
-    border-radius:               20px;
+    border-radius:               7px;
     cursor:                      "default";
     background-color:            @background;
 }
@@ -39,7 +39,7 @@ mainbox {
 message {
     margin:                      0px;
     padding:                     20px;
-    border-radius:               20px;
+    border-radius:               7px;
     background-color:            @background-alt;
     text-color:                  @foreground;
 }
@@ -74,13 +74,13 @@ listview {
 /*****----- Elements -----*****/
 element {
     padding:                     60px 10px;
-    border-radius:               20px;
+    border-radius:               7px;
     background-color:            @background-alt;
     text-color:                  @foreground;
     cursor:                      pointer;
 }
 element-text {
-    font:                        "feather 48";
+    font:                        "FiraCode Nerd Font Bold 48";
     background-color:            transparent;
     text-color:                  inherit;
     cursor:                      inherit;
