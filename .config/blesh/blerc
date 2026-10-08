@@ -9,8 +9,12 @@ bleopt complete_auto_delay=300
 bleopt complete_ambiguous=
 
 ble-face auto_complete='fg=240,italic'
-ble-face command_builtin='fg=250'
-ble-face syntax_error='fg=203'
+ble-face command_builtin='fg=255'
+ble-face syntax_error='fg=000,bg=255'
+ble-face command_alias='fg=255,underline'
+ble-face filename_directory='fg=245,underline,italic'
+ble-face command_file='fg=250,bold'
+
 
 ble-bind -m vi_nmap --cursor 2
 ble-bind -m vi_imap --cursor 5
