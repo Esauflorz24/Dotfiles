@@ -1,3 +1,19 @@
+vim.api.nvim_create_autocmd("ColorScheme", {
+	pattern = "*",
+	callback = function()
+		vim.api.nvim_set_hl(0, "StModeNormal", { fg = "#1e1e2e", bg = "#dddddd", bold = true })
+		vim.api.nvim_set_hl(0, "StModeInsert", { fg = "#1e1e2e", bg = "#aaaaaa", bold = true })
+		vim.api.nvim_set_hl(0, "StModeVisual", { fg = "#1e1e2e", bg = "#7788aa", bold = true })
+		vim.api.nvim_set_hl(0, "StModeCommand", { fg = "#1e1e2e", bg = "#789978", bold = true })
+
+		vim.api.nvim_set_hl(0, "StLspWarn", { fg = "#ffaa88", bg = "#242424", bold = true })
+		vim.api.nvim_set_hl(0, "StLspHints", { fg = "#7788aa", bg = "#242424", bold = true })
+		vim.api.nvim_set_hl(0, "StLspError", { fg = "#f7f7f7", bg = "#242424", bold = true })
+		vim.api.nvim_set_hl(0, "StLspInfo", { fg = "#7788aa", bg = "#242424", bold = true })
+
+		vim.api.nvim_set_hl(0, "StItems", { fg = "#1e1e2e", bg = "#aaaaaa", bold = true })
+	end,
+})
 local cached_branch = ""
 local icon_empty = vim.fn.nr2char(0xf021a)
 local last_check = 0
@@ -8,7 +24,7 @@ local function git_branch()
 		last_check = now
 	end
 	if cached_branch ~= "" then
-		return " \u{eafd} " .. cached_branch .. " " -- nf-dev-git_branch
+		return "%#StItems# \u{f126} " .. cached_branch .. " %#StatusLine#"
 	end
 
 	return ""
@@ -58,16 +74,16 @@ local function file_type()
 	}
 
 	if ft == "toggleterm" then
-		return ft .. " \u{ebc6}"
+		return "%#StItems# " .. ft .. " \u{ebc6}" .. " %#StatusLine#"
 	end
 	if ft == "neo-tree" then
-		return ft .. " \u{ef81} "
+		return "%#StItems# " .. ft .. " \u{ef81} " .. " %#StatusLine#"
 	end
 
 	local path = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0))
 	local name = (path == "" and "Empty") or vim.fn.fnamemodify(path, ":t")
 
-	return (icons[ft] or icon_empty .. " ") .. name
+	return "%#StItems# " .. (icons[ft] or icon_empty .. " ") .. name .. " %#StatusLine#"
 end
 
 local function file_size()
@@ -83,22 +99,8 @@ local function file_size()
 	else
 		size_str = string.format("%.1fM", size / 1024 / 1024)
 	end
-	return " \u{f016} " .. size_str .. " " -- nf-fa-file_o
+	return "%#StItems# \u{f15b} " .. size_str .. " %#StatusLine#" -- nf-fa-file_o
 end
-vim.api.nvim_create_autocmd("ColorScheme", {
-	pattern = "*",
-	callback = function()
-		vim.api.nvim_set_hl(0, "StModeNormal", { fg = "#1e1e2e", bg = "#dddddd", bold = true })
-		vim.api.nvim_set_hl(0, "StModeInsert", { fg = "#1e1e2e", bg = "#aaaaaa", bold = true })
-		vim.api.nvim_set_hl(0, "StModeVisual", { fg = "#1e1e2e", bg = "#7788aa", bold = true })
-		vim.api.nvim_set_hl(0, "StModeCommand", { fg = "#1e1e2e", bg = "#789978", bold = true })
-
-		vim.api.nvim_set_hl(0, "StLspWarn", { fg = "#ffaa88", bg = "#242424", bold = true })
-		vim.api.nvim_set_hl(0, "StLspHints", { fg = "#7788aa", bg = "#242424", bold = true })
-		vim.api.nvim_set_hl(0, "StLspError", { fg = "#f7f7f7", bg = "#242424", bold = true })
-		vim.api.nvim_set_hl(0, "StLspInfo", { fg = "#7788aa", bg = "#242424", bold = true })
-	end,
-})
 
 -- Mode indicators with Nerd Font icons
 local function mode_icon()
@@ -134,7 +136,7 @@ local function print_diagnostic()
 	local info = #vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity.INFO })
 
 	local hints_msg = (hint > 0) and ("%#StLspHints#" .. "󰠠 " .. hint .. "%*" .. " ") or ""
-	local error_msg = (error > 0) and ("%#StLspError#" .. "  " .. error .. "%*" .. " ") or ""
+	local error_msg = (error > 0) and ("%#StLspError#" .. " " .. error .. "%*" .. " ") or ""
 	local warn_msg = (warn > 0) and ("%#StLspWarn#" .. "  " .. warn .. "%*" .. " ") or ""
 	local info_msg = (info > 0) and ("%#StLspInfo#" .. "󰋼 " .. info .. "%*" .. " ") or ""
 
@@ -158,16 +160,16 @@ local function setup_dynamic_statusline()
 			local status_line = {
 				"%{%v:lua.mode_icon()%}",
 				" ",
-				"\u{f413} ~" .. vim.uv.cwd(), -- nf-pl-left_hard_divider
-				"%{v:lua.git_branch()}",
-				"\u{23fd} ", -- nf-pl-left_hard_divider
-				"%{v:lua.file_type()} ",
-				"\u{23fd} ", -- nf-pl-left_hard_divider
-				"%{v:lua.file_size()}",
+				"%#StItems# \u{f07b} ~" .. vim.uv.cwd() .. " %#StatusLine#", -- nf-pl-left_hard_divider
+				" ",
+				"%{%v:lua.git_branch()%}",
+				" ", -- nf-pl-left_hard_divider
+				"%{%v:lua.file_type()%}",
+				" ", -- nf-pl-left_hard_divider
+				"%{%v:lua.file_size()%}",
 				"%=", -- Right-align everything after this
 				"%{%v:lua.print_diagnostic()%}",
-				"%#StModeInsert#",
-				" \u{f017} %l:%c  %P ", -- nf-fa-clock_o for line/col
+				"%#StModeNormal# \u{ebc6} %l:%c  %P ", -- nf-fa-clock_o for line/col
 			}
 
 			local winid = vim.g.statusline_winid or vim.api.nvim_get_current_win()
@@ -200,7 +202,6 @@ local function setup_dynamic_statusline()
 			vim.opt_local.statusline = table.concat(status_line)
 		end,
 	})
-	vim.api.nvim_set_hl(0, "StatusLineBold", { bold = true })
 
 	--vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 	--	callback = function()
