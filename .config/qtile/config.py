@@ -9,7 +9,9 @@ from libqtile.lazy import lazy
 from libqtile.log_utils import logger
 from libqtile.utils import send_notification
 from qtile_extras import widget
+from qtile_extras.widget import Net
 from qtile_extras.widget.decorations import RectDecoration
+from qtile_extras.widget.mixins import ConnectionCheckMixin
 
 # from themes.tokyonight import colors
 from themes.monochrome import colors
@@ -19,33 +21,30 @@ terminal = "kitty"
 browser = "firefox"
 
 
-@lazy.function
-def set_ip_target(qtile):
+class NetWidget(Net, ConnectionCheckMixin):
+    def __init__(self, **config):
+        Net.__init__(self, **config)
+        self.add_defaults(ConnectionCheckMixin.defaults)
+        ConnectionCheckMixin.__init__(self)
 
-    IP_REGEX = r"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+    def _configure(self, qtile, bar):
+        Net._configure(self, qtile, bar)
+        ConnectionCheckMixin._configure(self)
 
-    try:
-        rofi_command = [
-            "rofi",
-            "-dmenu",
-            "-theme",
-            ".config/rofi/target.rasi",
-        ]
+    def poll(self):
+        if not self.is_connected:
+            return "Offline"
 
-        output = subprocess.check_output(rofi_command, universal_newlines=True).strip()
+        return super().poll()
 
-        if not output:
-            return
 
-        if not re.match(IP_REGEX, output):
-
-            qtile.spawn(f"notify-send 'IP invalida' '{output} No es una IP'")
-            return
-
-        qtile.widgets_map["ip_target"].update(output)
-        qtile.spawn(f"notify-send 'IP guardada' 'Objetivo: {output}'")
-    except subprocess.CalledProcessError:
-        pass
+def get_target():
+    path = "/tmp/targets.txt"
+    if not os.path.exists(path):
+        return "No target"
+    with open(path, "r") as f:
+        contenido = f.readlines()[-1]
+        return contenido.strip() if contenido else "Empty file"
 
 
 keys = [
@@ -89,17 +88,24 @@ keys = [
         ([mod], "e", lazy.spawn("thunar")),
         # Terminal
         ([mod], "Return", lazy.spawn("kitty")),
-        # Ip target
-        ([mod], "p", set_ip_target),
         # Redshift
         ([mod], "r", lazy.spawn("redshift -O 2400")),
         ([mod, "shift"], "r", lazy.spawn("redshift -x")),
         # Screenshot
-        ([mod], "s", lazy.spawn("flameshot full -p /home/esz/Imágenes/Capturas")),
+        (
+            [mod],
+            "s",
+            lazy.spawn("flameshot full --clipboard -p  /home/esz/Imágenes/Capturas"),
+        ),
         (
             [mod, "shift"],
             "s",
-            lazy.spawn("flameshot gui -p /home/esz/Imágenes/Capturas"),
+            lazy.spawn("flameshot gui -p /home/esz/Imágenes/Capturas --clipboard "),
+        ),
+        (
+            [mod, "control"],
+            "s",
+            lazy.spawn("flameshot gui --clipboard"),
         ),
         # ------------ Hardware Configs ------------
         # Volume
@@ -183,13 +189,27 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="FiraCode Nerd Font ",
+    font="Hack Nerd Font",
     padding=5,
-    fontsize=16,
+    fontsize=15,
     foreground=colors["white"],
     background=colors["black"],
 )
 extension_defaults = widget_defaults.copy()
+
+decor_default = {
+    "decorations": [
+        RectDecoration(
+            colour=colors["gray2"],
+            radius=5,
+            filled=True,
+            padding_y=5,
+            padding_x=10,
+            group=False,
+        )
+    ],
+    "padding": 17,
+}
 
 decor_powermenu = {
     "decorations": [
@@ -229,6 +249,18 @@ decor_left_img = {
     ],
     "padding": 5,
 }
+decor_left_img_clock = {
+    "decorations": [
+        RectDecoration(
+            colour=colors["gray9"],
+            radius=[4, 0, 0, 4],
+            filled=True,
+            padding_y=5,
+            clip=True,
+        )
+    ],
+    "padding": -1,
+}
 decor_right_widget = {
     "decorations": [
         RectDecoration(
@@ -266,12 +298,19 @@ def init_widgets():
         ),
         widget.Spacer(length=10),
         widget.Image(
-            filename="~/.config/qtile/assets/calendar.png",
+            filename="~/.config/qtile/assets/eye.svg",
+            **decor_left_img,
+            margin_y=8,
+        ),
+        widget.GenPollText(func=get_target, update_interval=2, **decor_left_widget),
+        widget.Spacer(length=10),
+        widget.Image(
+            filename="~/.config/qtile/assets/clock.svg",
             **decor_left_img,
             margin_y=8,
         ),
         widget.Clock(
-            format="%a %b %d, %Y",
+            format="%H:%M",
             foreground=colors["white"],
             mouse_callbacks={
                 "Button1": lazy.spawn("gsimplecal"),
@@ -279,25 +318,6 @@ def init_widgets():
             },
             **decor_left_widget,
         ),
-        widget.Spacer(length=10),
-        widget.Image(
-            filename="~/.config/qtile/assets/eye.png",
-            **decor_left_img,
-            margin_y=8,
-        ),
-        widget.TextBox(**decor_left_widget, name="ip_target", text="No target"),
-        widget.Spacer(length=10),
-        widget.Image(
-            filename="~/.config/qtile/assets/clock.png",
-            **decor_left_img,
-            margin_y=8,
-        ),
-        widget.Clock(
-            format="%H:%M",
-            foreground=colors["white"],
-            **decor_left_widget,
-        ),
-        # widget.Prompt(**decor, name="prompt", cursor_type="line"),
         widget.Spacer(length=bar.STRETCH),
         widget.GroupBox(
             padding=5,
@@ -313,26 +333,27 @@ def init_widgets():
             other_screen_border=colors["black"],
             urgent_border=colors["red"],
             urgent_text=colors["red"],
-            # hide_unused=True,
+            hide_unused=True,
         ),
         widget.Spacer(length=bar.STRETCH),
         widget.Systray(),
+        widget.Spacer(length=10),
         widget.StatusNotifier(
-            **decor_right_widget,
+            **decor_default,
         ),
         widget.CheckUpdates(
             distro="Arch_checkupdates",
             update_interval=5,
-            display_format="{updates} Packages",
+            display_format="{updates} Pkgs",
             foreground=colors["white"],
             background=colors["black"],
             colour_have_updates=colors["white"],
             colour_no_updates=colors["white"],
-            no_update_string="no updates",
+            no_update_string="No updates",
             **decor_right_widget,
         ),
         widget.Image(
-            filename="~/.config/qtile/assets/download.png",
+            filename="~/.config/qtile/assets/download.svg",
             **decor_right_img,
             margin_y=8,
         ),
@@ -362,12 +383,14 @@ def init_widgets():
         widget.Spacer(length=10),
         widget.CPU(**decor_right_widget, format="{load_percent}%"),
         widget.Image(
-            filename="~/.config/qtile/assets/cpu.png",
+            filename="~/.config/qtile/assets/cpu.svg",
             **decor_right_img,
             margin_y=8,
         ),
         widget.Spacer(length=10),
-        widget.Net(
+        NetWidget(
+            update_interval=1,
+            check_connection_interval=1,
             format="{total:.0f} {total_suffix}",
             interface="enp5s0",
             mouse_callbacks={
@@ -377,13 +400,13 @@ def init_widgets():
             **decor_right_widget,
         ),
         widget.Image(
-            filename="~/.config/qtile/assets/ethernet.png",
+            name="connection_icon",
             **decor_right_img,
             margin_y=8,
         ),
         widget.Spacer(length=10),
         widget.Memory(
-            format="{MemUsed: .2f}{mm} /{MemTotal: .2f}{mm}",
+            format="{MemUsed:.2f}{mm}",
             measure_mem="G",
             mouse_callbacks={
                 "Button1": lazy.spawn(
@@ -397,21 +420,12 @@ def init_widgets():
             **decor_right_widget,
         ),
         widget.Image(
-            filename="~/.config/qtile/assets/ram.png",
+            filename="~/.config/qtile/assets/ram.svg",
             **decor_right_img,
             margin_y=8,
         ),
-        # widget.TextBox(
-        #    text="",
-        #       fontsize=16,
-        #       mouse_callbacks={
-        #           "Button1": lazy.spawn("/home/esz/.config/rofi/powermenu.sh"),
-        #           "Button3": lazy.spawn("betterlockscreen -l"),
-        #       },
-        #       **decor,
-        #   ),
         widget.Image(
-            filename="~/.config/qtile/assets/power.png",
+            filename="~/.config/qtile/assets/power.svg",
             **decor_powermenu,
             margin_y=9,
             mouse_callbacks={
@@ -419,33 +433,6 @@ def init_widgets():
                 "Button3": lazy.spawn("rofi -show drun"),
             },
         ),
-        # widget.TextBox(
-        #     text="",
-        #     foreground = colors["red"],
-        #     ),
-        # #widget.Sep(),
-        # widget.ThermalSensor(
-        #     format=' {temp:.0f}{unit}',
-        #     tag_sensor='Tctl',
-        #     threshold=60,
-        #     foreground_alert=colors["red"],
-        #     foreground = colors["fg"],
-        #     ),
-        # widget.Backlight(
-        #     backlight_name = 'intel_backlight',
-        #     format = '  {percent:2.0%}',
-        #     ),
-        # widget.TextBox(
-        #     #text='',
-        #     text="",
-        #     foreground = colors["red"],
-        #     ),
-        # widget.Sep(),
-        # widget.TextBox(
-        #     # text='',
-        #     text="",
-        #     foreground=colors["hint"],
-        # ),
         # widget.UPowerWidget(
         #    battery_name="BAT0",
         #    border_charge_colour="#00FF00",
@@ -465,7 +452,7 @@ def init_widgets():
 
 
 def status_bar(widgets):
-    return bar.Bar(widgets, 36, margin=[5, 5, 1, 5])
+    return bar.Bar(widgets, 34, margin=[5, 5, 1, 5])
 
 
 screens = [Screen(top=status_bar(init_widgets()))]
@@ -551,14 +538,14 @@ def vol_change(volume, muted):
     icon_path = None
 
     if not muted:
-        if volume < 25:
-            icon_path = f"{base_path}/volume1.png"
-        elif volume < 40:
-            icon_path = f"{base_path}/volume2.png"
-        elif volume <= 60:
-            icon_path = f"{base_path}/volume3.png"
+        if volume < 15:
+            icon_path = f"{base_path}/volume1.svg"
+        elif volume < 25:
+            icon_path = f"{base_path}/volume2.svg"
+        elif volume <= 153:
+            icon_path = f"{base_path}/volume3.svg"
     else:
-        icon_path = f"{base_path}/muted.png"
+        icon_path = f"{base_path}/muted.svg"
 
     if icon_path:
         widget = qtile.widgets_map.get("volume_icon")
@@ -570,3 +557,33 @@ def vol_change(volume, muted):
 def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.run([home])
+
+
+@hook.subscribe.startup
+def run_every_startup():
+    nmcli = "nmcli device status | awk '{print$2}'  | sed -n '2p'"
+    command = subprocess.run(
+        nmcli,
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+
+    if command.returncode != 0:
+        error = command.stderr.decode("UTF-8")
+        logger.error(f"{error}")
+
+    stdout = command.stdout.decode("UTF-8").strip().capitalize()
+
+    if stdout == "Wifi":
+        widget = qtile.widgets_map.get("connection_icon")
+        if widget and hasattr(widget, "update"):
+            icon_path = "/home/esz/.config/qtile/assets/wifi.svg"
+            widget.update(icon_path)
+    else:
+        widget = qtile.widgets_map.get("connection_icon")
+        if widget and hasattr(widget, "update"):
+            icon_path = "/home/esz/.config/qtile/assets/ethernet.svg"
+            widget.update(icon_path)
+
+    send_notification("Connection type", f"{stdout}")
